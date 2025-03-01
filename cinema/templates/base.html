@@ -1,0 +1,128 @@
+{% load semanticui %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Название страницы -->
+    <title>{% block title %}Мой Киносайт{% endblock title %}</title>
+    
+    <!-- Подключение стилей Semantic UI -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    
+    <!-- Подключение шрифта Roboto для заголовков -->
+    <style>
+              /* Центрируем форму поиска */
+        .right.menu .ui.form {
+            text-align: center;
+        }
+
+        /* Распределяем равномерно пространство вокруг формы */
+        .right.menu .ui.form .ui.search {
+            margin: 0 auto;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .ui.main.text.container {
+            padding-top: 2em;
+        }
+        .ui.divided.items > .item {
+            padding: 1.5em 0;
+        }
+        .ui.rounded.image {
+            border-radius: 10px !important;
+        }
+        .ui.placeholder.segment {
+            text-align: center;
+            padding: 3em;
+        }
+        .ui.pagination.menu {
+            margin-top: 2em;
+            justify-content: center;
+        }
+        footer.ui.inverted.vertical.segment {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .ui.main.text.container {
+            padding-top: 50px;
+            padding-bottom: 60px; /* Добавляем отступ снизу */
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Навигационное меню -->
+    <nav class='ui inverted menu'>
+        <div class='ui container'>
+            <!-- Логотип сайта -->
+            <a href="#" class='header item'>
+                <h1 style="font-size: 24px;">Киносайт</h1>
+            </a>
+
+            <!-- Меню пользователя -->
+            <div class='right menu'>
+                {% if user.is_authenticated %}
+                    <a class='item'>{{ user.username }}</a>
+                    <a href="{% url 'logout' %}" class='item'>Выйти</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class='item'>Войти</a>
+                    <a href="#" class='item'>Регистрация</a>
+                {% endif %}
+            </div>
+
+            <!-- Кнопка поиска фильмов -->
+            <div class='right menu'>
+              <form action="#" method='get' class='ui form'>
+                <div class="ui category search">
+                  <div class="ui icon input">
+                    <input class="prompt" type="text" placeholder="Search animals...">
+                    <i class="search icon"></i>
+                  </div>
+                  <div class="results"></div>
+                </div>
+              </form>
+          </div>
+        </div>
+    </nav>
+
+    <!-- Основной контент страницы -->
+    <div class='ui main text container' style="padding-top: 50px;">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Футер сайта с дополнительной информацией о сайте и ссылками на социальные сети-->
+    <footer class='ui inverted vertical segment' style="padding: 10px 0;">
+        &copy; {{ year }} Киносайт.
+        Все права защищены.
+
+        <!-- Ссылки на социальные сети (например)-->
+        Следите за нами в:
+        &nbsp;<i class="facebook icon"></i>&nbsp;
+        &nbsp;<i class="twitter icon"></i>&nbsp;
+        &nbsp;<i class="vk icon"></i>&nbsp;
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+
+    <!-- Блок для дополнительных скриптов или JavaScript кода-->
+    <script>{% block scripts %}{% endblock scripts %}</script>
+    {% block extra_js %}{% endblock extra_js %}
+
+</body>
+</html>

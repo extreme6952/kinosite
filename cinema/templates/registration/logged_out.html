@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %} Выход {% endblock title %}
+
+{% block content %}
+<div class="ui container" style="margin-top: 50px;">
+    <div class="ui raised segment">
+        <h2 class="ui header">Вы вышли из аккаунта</h2>
+        <p>Спасибо, что воспользовались нашим сервисом!</p>
+        <p>Чтобы продолжить, <a href="{% url 'login' %}" class="ui button primary">авторизуйтесь снова</a>.</p>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="ui container">
+  <h1 class="ui header">Наши сериалы</h1>
+  
+  {% if series %}
+    <div class="ui four cards">
+      {% for object in series %}
+        <div class="card">
+          <a class="image" href="{{ object.get_absolute_url }}">
+            <img src="{% if object.cover %}{{ object.cover.url }}{% else %}{% static 'images/default_cover.jpg' %}{% endif %}" alt="{{ object.name }} обложка">
+          </a>
+          <div class="content">
+            <a class="header" href="{{ object.get_absolute_url }}">{{ object.name }}</a>
+            <div class="meta">
+              <small>Студия: {{ object.studio }}</small>
+            </div>
+            <div class="description">
+              {{ object.description|truncatewords:20 }}
+            </div>
+          </div>
+          <div class="extra content">
+            <span class="right floated">
+              <i class="heart outline like icon"></i>
+              10 лайков
+            </span>
+            <span>
+              <i class="calendar icon"></i>
+              Дата создания: {{ object.created|date:"d.m.Y" }}
+            </span>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>Упс! Сериалов пока нет.</p>
+  {% endif %}
+</div>
+{% endblock %}

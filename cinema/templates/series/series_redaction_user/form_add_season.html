@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %} {{series.name}} {% endblock title %}
+
+{% block content %}
+    <div class="ui container">
+        <h2 class="ui dividing header">Форма</h2>
+        <form method="post" class="ui form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            
+            <!-- Если вы хотите стилизовать поля вручную -->
+            <!-- 
+            {% for field in form %}
+                <div class="field">
+                    <label>{{ field.label_tag }}</label>
+                    {{ field }}
+                </div>
+            {% endfor %}
+            -->
+            
+            <!-- Добавляем классы для кнопки -->
+            <button type="submit" class="ui primary button fluid" style="display: block;">Сохранить</button>
+
+        </form>
+    </div>
+{% endblock content %}

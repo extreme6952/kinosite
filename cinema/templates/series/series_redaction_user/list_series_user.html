@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Список ваших фильмов{% endblock title %}
+
+{% block content %}
+    <div class="ui main text container">
+        <h1 class="ui header">Ваши фильмы</h1>
+        {% if object_list %}
+            <div class="ui divided items">
+                {% for series in object_list %}
+                    <div class="item">
+                        <div class="image">
+                            {% if series.cover %}
+                                <img src="{{ series.cover.url }}" alt="{{ series.name }}" class="ui medium rounded image" style="width: 150px; height: 200px; object-fit: cover;">
+                            {% else %}
+                                <div class="ui medium rounded image placeholder" style="width: 150px; height: 200px; background-color: #f0f0f0;">
+                                    <i class="video icon" style="font-size: 50px; color: #ccc;"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="content">
+                            <!-- Название сериала с ссылкой на детали -->
+                            <a href="#" class="ui medium header">{{ series.name }}</a>                      
+                            <!-- Мета-информация (например, студия) -->
+                            <div class="meta">
+                                <span class="cinema"><i class="building icon"></i> {{ series.studio }}</span>
+                            </div>
+                            <!-- Краткое описание -->
+                            <div class="description">
+                                {{ series.description|truncatewords:20 }}
+                            </div>
+                            <!-- Кнопки управления (если доступно) -->
+                            {% if user.is_authenticated and user == series.user %}
+                                <div class="extra">
+                                <a href="{% url "add_season_user_series" series.pk %}">
+                                    <button type="button" onclick="#" class="ui mini primary button"><i class="edit icon"></i>Редактировать</button>
+                                </a>
+                                    <button type="button" onclick="" class="ui mini red button">
+                                        <i class="trash icon"></i>Удалить
+                                    </button>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Пагинация (если необходимо) -->
+            <div class="ui pagination menu">
+                <a class="item">1</a>
+                <a class="item">2</a>
+                <a class="item">3</a>
+                <a class="item">4</a>
+            </div>
+            
+        {% else %}
+            <!-- Если список пуст -->
+            <div class="ui placeholder segment">
+                <div class="ui icon header">
+                    <i class="film icon"></i>
+                    Вы пока не добавили ни одного фильма.
+                </div>
+                <!-- Ссылка на добавление нового сериала (если доступно) -->
+                {% if user.is_authenticated %}
+                    <button type="button" onclick="" class="ui green button">
+                        <i class="plus icon"></i>Добавить новый сериал
+                    </button>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock content %}

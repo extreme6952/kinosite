@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %} 
+    {% if object %}  
+        {{obj.name}}
+    {% else %}
+        create
+    {% endif %} 
+{% endblock title %}
+
+
+{% block content %}
+    {% if object %}
+        <p>update {{obj.name}}</p>
+    {% endif %}
+    <form method="post" enctype="multipart/form-data">
+        {{form.as_p}}
+        {% csrf_token %}
+        <input type="submit" value="save">
+    </form>
+{% endblock content %}

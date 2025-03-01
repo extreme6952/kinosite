@@ -1,5 +1,4 @@
 from django.db import models
-from setuptools._vendor.pyparsing import unicode
 from unidecode import unidecode
 from django.urls import reverse
 from django.utils.text import slugify
@@ -27,15 +26,15 @@ class Series(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(unicode(self.name))
+            self.slug = slugify(unidecode(self.name))
         return super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
     
     def get_absolute_url(self):
-        return reverse("series:series_detail", kwargs={"id": self.pk,
-                                                       "slug":self.slug})
+        return reverse("series_detail", args=[self.id,
+                                              self.slug,])
     
 
 class Season(models.Model):
@@ -50,7 +49,7 @@ class Season(models.Model):
     updated = models.DateTimeField(auto_now=True)
     
     class Meta:
-        ordering = ['-created']
+        ordering = ['created']
         verbose_name = 'Сезон'
         verbose_name_plural = 'Сезоны'
 

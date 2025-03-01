@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Вход в систему{% endblock title %}
+
+{% block content %}
+<div class="ui middle aligned center aligned grid" style="height: 100vh;">
+    <div class="column" style="max-width: 450px;">
+        <h2 class="ui teal header">Добро пожаловать!</h2>
+        <div class="ui segment">
+            {% if form.errors %}
+                <div class="ui red message">
+                    <p>Ваш логин или пароль неверен. Пожалуйста, попробуйте снова.</p>
+                </div>
+            {% endif %}
+            <form method="post" class="ui form">
+                {% csrf_token %}
+                <div class="field">
+                    <label for="{{ form.username.id_for_label }}">Логин</label>
+                    {{ form.username }} <!-- Render username field directly -->
+                </div>
+                <div class="field">
+                    <label for="{{ form.password.id_for_label }}">Пароль</label>
+                    {{ form.password }} <!-- Render password field directly -->
+                </div>
+                <button type="submit" class="ui primary button fluid">Войти</button>
+            </form>
+            <div class="ui message">
+                Нет аккаунта? <a href="#">Зарегистрируйтесь здесь.</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
