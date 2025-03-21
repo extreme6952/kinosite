@@ -3,11 +3,27 @@
 {% block title %} Выход {% endblock title %}
 
 {% block content %}
-<div class="ui container" style="margin-top: 50px;">
-    <div class="ui raised segment">
-        <h2 class="ui header">Вы вышли из аккаунта</h2>
-        <p>Спасибо, что воспользовались нашим сервисом!</p>
-        <p>Чтобы продолжить, <a href="{% url 'login' %}" class="ui button primary">авторизуйтесь снова</a>.</p>
+<div class="ui middle aligned center aligned grid" style="height: 100vh; background: #f8f9fa;">
+    <div class="column" style="max-width: 450px; padding: 2rem;">
+        <div class="ui raised segment" style="border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.1);">
+            <h2 class="ui header" style="font-size: 2rem; margin-bottom: 1.5rem;">
+                <i class="sign out icon"></i> Вы вышли из аккаунта
+            </h2>
+            
+            <div class="ui message" style="border-radius: 8px; padding: 1rem;">
+                <i class="checkmark icon"></i>
+                <div class="content">
+                    <div class="header">Спасибо за использование сервиса!</div>
+                    <p>Для продолжения работы нажмите кнопку ниже:</p>
+                </div>
+            </div>
+
+            <div class="ui two buttons" style="margin-top: 1rem;">
+                <a href="{% url 'login' %}" class="ui primary button fluid">
+                    <i class="sign in icon"></i> Авторизоваться 
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock content %}

@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %} {{ season.title }} {% endblock title %}
+
+{% block content %}
+<div class="ui container">
+    {% with series=season.series %}
+    <div class="ui vertical segment">
+        <h1 class="ui huge header">
+            <i class="film icon"></i>
+            {{ series.name }}
+        </h1>
+        
+        <!-- Кнопки управления -->
+        <div class="ui grid">
+            <div class="four wide column">
+                {% if user.is_authenticated and user == series.user %}
+                <a href="{% url 'add_season_user_series' series.pk %}" 
+                   class="ui green button">
+                    <i class="plus icon"></i>
+                    Создать новый сезон
+                </a>
+                {% endif %}
+            </div>
+            <div class="twelve wide column">
+                <a href="{% url 'content_video_create' season_id=season.id model_name='video' %}" 
+                   class="ui primary button">
+                    <i class="plus circle icon"></i>
+                    Добавить серию
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Список сезонов с выделением текущего -->
+    <div class="ui vertical segment">
+        <h2 class="ui dividing header">
+            <i class="list ul icon"></i>
+            Сезоны сериала
+        </h2>
+        
+        <div class="ui divided items">
+            {% for s in series.season_series.all %}
+            <div class="item {% if s == season %}positive{% endif %}">
+                <div class="content">
+                    <a href="{% url 'series_season_user' s.id %}" 
+                       class="ui medium header {% if s == season %}positive{% endif %}">
+                        <i class="play circle outline icon"></i>
+                        {{ s.title }} {{ s.counter|add:1 }} Сезон
+                    </a>
+                    <div class="meta">
+                        <span class="date">Создан: {{ s.created|date:"d.m.Y" }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Эпизоды сезона -->
+    <div class="ui vertical segment">
+        <h2 class="ui dividing header">
+            <i class="video icon"></i>
+            Эпизоды сезона
+        </h2>
+        
+        <div class="ui three stackable cards">
+            {% for content in season.content_set.all %}
+            <div class="ui card">
+                <div class="image">
+                    <video controls class="ui fluid image" style="background: black">
+                        <source src="{{ content.item.video.url }}">
+                    </video>
+                </div>
+                <div class="content">
+                    <div class="header">{{ content.item.title }}</div>
+                    <div class="meta">
+                        <span>Добавлен: {{ content.created|date:"d.m.Y" }}</span>
+                    </div>
+                </div>
+                <div class="extra content">
+                    <a href="{% url 'content_video_update' model_name='video' season_id=season.id id=content.item.id %}" 
+                       class="ui mini orange button">
+                        <i class="edit icon"></i>
+                        Редактировать
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="ui warning message">
+                <i class="exclamation circle icon"></i>
+                В этом сезоне пока нет эпизодов
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endwith %}
+</div>
+{% endblock content %}

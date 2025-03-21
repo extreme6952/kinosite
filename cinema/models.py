@@ -5,15 +5,15 @@ from django.utils.text import slugify
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
-
+from .fields import OrderField
 
 class Series(models.Model):
     user = models.ForeignKey(User,
                              on_delete=models.CASCADE,
                              related_name='series_creater')
-    name = models.CharField(max_length=250)
+    name = models.CharField(max_length=250,unique=True)
     cover = models.ImageField(upload_to='images/',blank=True)
-    slug = models.SlugField(max_length=250,blank=True,unique=True)
+    slug = models.SlugField(max_length=250,blank=True)
     description = models.TextField(blank=True)
     created = models.DateField(auto_now_add=True)
     updated = models.DateField(auto_now=True)
@@ -41,13 +41,11 @@ class Season(models.Model):
     series = models.ForeignKey(Series,
                                on_delete=models.CASCADE,
                                related_name='season_series')
-    title = models.CharField(max_length=250,
-                             blank=True)
     cover = models.ImageField(upload_to='images/',blank=True)
     description = models.TextField(blank=True)
     created = models.DateField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    
+    counter = OrderField(blank=True,for_fields=['series'])
     class Meta:
         ordering = ['created']
         verbose_name = 'Сезон'
@@ -62,9 +60,10 @@ class Content(models.Model):
                                on_delete=models.CASCADE)
     content_type = models.ForeignKey(ContentType,
                                      on_delete=models.CASCADE,
-                                     limit_choices_to={'model_in_':(
+                                     limit_choices_to={'model__in':(
                                          'video',
                                      )})
+    counter = OrderField(blank=True,for_fields=['season'])
     object_id = models.PositiveIntegerField()
     item = GenericForeignKey('content_type','object_id')
     created = models.DateField(auto_now_add=True)

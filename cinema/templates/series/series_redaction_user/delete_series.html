@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %} Удалить {{ object.name }} {% endblock title %}
+
+{% block content %}
+
+    <h3>Вы действительно хотите удалить полностью сериал "{{object.name}}"?</h3>
+        <form  method="post">
+            {% csrf_token %}
+            <input type="submit" value="Удалить">
+        </form>
+
+{% endblock content %}

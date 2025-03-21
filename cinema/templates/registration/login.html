@@ -3,29 +3,54 @@
 {% block title %}Вход в систему{% endblock title %}
 
 {% block content %}
-<div class="ui middle aligned center aligned grid" style="height: 100vh;">
-    <div class="column" style="max-width: 450px;">
-        <h2 class="ui teal header">Добро пожаловать!</h2>
-        <div class="ui segment">
+<div class="ui middle aligned center aligned grid" style="height: 100vh; background: #f8f9fa;">
+    <div class="column" style="max-width: 450px; padding: 2rem;">
+        <div class="ui raised segment" style="border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.1);">
+            <h2 class="ui teal header" style="font-size: 2rem; margin-bottom: 1.5rem;">
+                <i class="sign in icon"></i> Добро пожаловать!
+            </h2>
+            
+            <!-- Сообщения об ошибках -->
             {% if form.errors %}
-                <div class="ui red message">
+                <div class="ui red message" style="border-radius: 8px; padding: 1rem;">
+                    <i class="warning sign icon"></i>
                     <p>Ваш логин или пароль неверен. Пожалуйста, попробуйте снова.</p>
                 </div>
             {% endif %}
-            <form method="post" class="ui form">
+
+            <!-- Форма входа -->
+            <form method="post" class="ui form" style="margin-top: 1rem;">
                 {% csrf_token %}
-                <div class="field">
-                    <label for="{{ form.username.id_for_label }}">Логин</label>
-                    {{ form.username }} <!-- Render username field directly -->
+                
+                <!-- Поле логина -->
+                <div class="field" style="margin-bottom: 1rem;">
+                    <label for="{{ form.username.id_for_label }}" style="font-weight: 600; color: #2c3e50;">
+                        <i class="user icon"></i> Логин
+                    </label>
+                    {{ form.username }}
                 </div>
-                <div class="field">
-                    <label for="{{ form.password.id_for_label }}">Пароль</label>
-                    {{ form.password }} <!-- Render password field directly -->
+
+                <!-- Поле пароля -->
+                <div class="field" style="margin-bottom: 1rem;">
+                    <label for="{{ form.password.id_for_label }}" style="font-weight: 600; color: #2c3e50;">
+                        <i class="lock icon"></i> Пароль
+                    </label>
+                    {{ form.password }}
                 </div>
-                <button type="submit" class="ui primary button fluid">Войти</button>
+
+                <!-- Кнопка входа -->
+                <button type="submit" class="ui teal button fluid" style="border-radius: 25px; padding: 1rem;">
+                    <i class="sign in icon"></i> Войти
+                </button>
             </form>
-            <div class="ui message">
-                Нет аккаунта? <a href="#">Зарегистрируйтесь здесь.</a>
+
+            <!-- Ссылки -->
+            <div class="ui message" style="border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+                <i class="help circle icon"></i>
+                <div class="content">
+                    <div class="header">Нет аккаунта?</div>
+                    <p>Зарегистрируйтесь <a href="#" style="color: #2ecc71; font-weight: 600;">здесь</a>.</p>
+                </div>
             </div>
         </div>
     </div>

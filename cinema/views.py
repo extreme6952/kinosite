@@ -9,34 +9,59 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.base import View,TemplateResponseMixin
 from django.views.generic.edit import CreateView,DeleteView,UpdateView
-
+from django.contrib import messages
 
 class UserMixin:
     def get_queryset(self):
         qs = super().get_queryset()
         return qs.filter(user=self.request.user)
     
-
 class UserEditFormMixin:
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
     
-
 class UserSeriesMixin(UserMixin,
                       LoginRequiredMixin,
                       TemplateResponseMixin,):
     model = Series
     fields = ['name','cover','description','studio']
-    
+    success_url = reverse_lazy('list_user_series')
+
+class DeleteSeriesUser(UserSeriesMixin,DeleteView):
+    template_name = 'series/series_redaction_user/delete_series.html'
+
+
 
 class UserSeriesEditMixin(UserEditFormMixin,UserSeriesMixin):
     template_name = 'series/series_redaction_user/form_add_series.html'
 
+class SeriesAddFormView(TemplateResponseMixin,View):
+    template_name = 'series/series_redaction_user/form_add_series.html'
 
+    def get_form(self,data=None,files=None,*args, **kwargs):
+        return AddSeriesUser(data=data,files=files)
+
+    def get(self,request):
+        form = self.get_form()
+        return self.render_to_response({'form':form})
+    
+    def post(self,request):
+        form = self.get_form(data=request.POST,files=request.FILES)
+        if form.is_valid():
+            series = form.save(commit=False)
+            series.user = request.user
+            series.save()
+            messages.success(request,'Вы успешно добавили новые данные!')
+            return redirect('list_user_series')
+        else:
+            messages.error(request,'Произошла ошибка, повторите попытку')
+        return self.render_to_response({'form':form})
+    
+
+    
 class SeriesUserListView(UserSeriesMixin,ListView):
     template_name = 'series/series_redaction_user/list_series_user.html'
-
 
 class AddSeasonSeriesView(TemplateResponseMixin,View):
     template_name = 'series/series_redaction_user/form_add_season.html'
@@ -127,7 +152,9 @@ class VideoSeriesSeasonCreateUpdateView(TemplateResponseMixin,View):
         form = self.get_form(self.model,
                              instance=self.obj)    
         return self.render_to_response({'form':form,
-                                        'object':self.obj})
+                                        'object':self.obj,
+                                        'season':self.season,
+                                        'series':self.season.series})
     
     def post(self,request,season_id,model_name,id=None):
         form = self.get_form(self.model,
@@ -152,8 +179,18 @@ class SeriesCinemaListView(ListView):
     template_name = 'series/series_home_page/list_series_home.html'
     context_object_name = 'series'
 
-
 class SeriesDetailView(DetailView):
     model = Series
     template_name = 'series/series_home_page/detail_series.html'
     context_object_name = 'series'
+
+#Предоставление просомтра юзером контента своих сериалов и редактитрования своего сериала
+class SeasonVideoView(TemplateResponseMixin,View):
+    template_name = 'series/series_home_page/season_video.html'
+
+    def get(self,request,season_id):
+        season = get_object_or_404(Season,
+                                   id=season_id,
+                                   series__user=request.user)
+        return self.render_to_response({'season':season})
+    

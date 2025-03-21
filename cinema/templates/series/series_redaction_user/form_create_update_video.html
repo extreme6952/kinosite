@@ -1,21 +1,73 @@
 {% extends "base.html" %}
 
-{% block title %} 
-    {% if object %}  
-        {{obj.name}}
+{% block title %}
+    {% if object %}
+        <i class="edit icon"></i> Редактирование видео
     {% else %}
-        create
-    {% endif %} 
+        <i class="plus circle icon"></i> Создание видео
+    {% endif %}
 {% endblock title %}
 
-
 {% block content %}
-    {% if object %}
-        <p>update {{obj.name}}</p>
-    {% endif %}
-    <form method="post" enctype="multipart/form-data">
-        {{form.as_p}}
-        {% csrf_token %}
-        <input type="submit" value="save">
-    </form>
+<div class="ui container">
+    <div class="ui vertical segment">
+        <h2 class="ui dividing header">
+            {% if object %}
+                <i class="edit icon"></i>
+                Редактирование видео
+            {% else %}
+                <i class="plus circle icon"></i>
+                Создание нового видео
+            {% endif %}
+        </h2>
+        
+        <form method="post" enctype="multipart/form-data" class="ui form">
+            {% csrf_token %}
+            
+            {% for field in form %}
+                <div class="field {% if field.errors %}error{% endif %}">
+                    <label>{{ field.label }}</label>
+                    {% if field.field.widget.input_type == 'file' %}
+                        <div class="ui labeled button">
+                            <div class="ui button">
+                                <i class="file icon"></i>
+                                Выбрать файл
+                            </div>
+                            {{ field }}
+                        </div>
+                        
+                        <!-- ПРЕДЗАГРУЗКА СУЩЕСТВУЮЩЕГО ВИДЕО -->
+                        {% if object %}
+                            <div class="ui segment">
+                                <video controls class="ui fluid image" 
+                                       style="background: black; margin-top: 1em">
+                                    <source src="{{ object.video.url }}" type="video/mp4">
+                                    Ваш браузер не поддерживает видео
+                                </video>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
+                    
+                    {% if field.errors %}
+                        <div class="ui pointing red basic label">
+                            {{ field.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            
+            <button type="submit" class="ui primary button">
+                {% if object %}
+                    <i class="save icon"></i>
+                    Сохранить изменения
+                {% else %}
+                    <i class="plus circle icon"></i>
+                    Создать видео
+                {% endif %}
+            </button>
+        </form>
+    </div>
+</div>
 {% endblock content %}

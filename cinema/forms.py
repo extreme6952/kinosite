@@ -4,5 +4,27 @@ from django.forms.models import inlineformset_factory
 
 formset_season = inlineformset_factory(Series,
                                 Season,
-                                fields=['title','description'],
+                                fields=['description'],
                                 extra=2)
+
+class AddSeriesUser(forms.ModelForm):
+    class Meta:
+        model = Series
+        fields = ['name','cover','description','studio' ]
+
+    def __init__(self,*args, **kwargs):
+
+        super().__init__(*args, **kwargs)
+
+        self.fields['name'].widget.attrs.update({
+            'placeholder':'Название',
+        })
+        self.fields['cover'].widget.attrs.update({
+            'placeholder':'Обложка сериала',
+        })
+        self.fields['description'].widget.attrs.update({
+            'placeholder':'Описание',
+        })
+        self.fields['studio'].widget.attrs.update({
+            'placeholder':'Студия',
+        })

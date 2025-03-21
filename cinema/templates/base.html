@@ -5,48 +5,164 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <!-- Название страницы -->
-    <title>{% block title %}Мой Киносайт{% endblock title %}</title>
+    <title>{% block title %}Киносайт | Ваш личный кинотеатр{% endblock title %}</title>
     
-    <!-- Подключение стилей Semantic UI -->
+    <!-- Подключение стилей -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- Подключение шрифта Roboto для заголовков -->
+    <!-- Кастомные стили -->
     <style>
-              /* Центрируем форму поиска */
-        .right.menu .ui.form {
-            text-align: center;
-        }
-
-        /* Распределяем равномерно пространство вокруг формы */
-        .right.menu .ui.form .ui.search {
-            margin: 0 auto;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
+        :root {
+            --primary-color: rgba(0, 38, 191, 0.9); /* Основной акцентный цвет */
+            --secondary-color: #3498db; /* Вторичный цвет */
+            --dark-color: #2c3e50; /* Темный цвет */
+            --light-color: #f8f9fa; /* Фоновый цвет */
+            --accent-color: #e8f5e9; /* Цвет выделения */
         }
         
-        h1, h2, h3, h4, h5, h6 {
+        
+        /* Глобальные стили */
+        body {
             font-family: 'Roboto', sans-serif;
+            background-color: var(--light-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
         }
-
+        
+        /* Навигационное меню */
+        .ui.inverted.menu {
+            border-bottom: 3px solid var(--primary-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background-color: rgba(255,255,255,0.98) !important;
+        }
+        
+        .ui.inverted.menu .header.item {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color) !important;
+            margin-right: 2rem;
+        }
+        
+        /* Контент */
         .ui.main.text.container {
-            padding-top: 2em;
+            padding: 2rem 0;
+            max-width: 1200px;
+            min-height: calc(100vh - 120px);
         }
-        .ui.divided.items > .item {
-            padding: 1.5em 0;
+        
+        /* Карточки сериалов */
+        .ui.items > .item {
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            background: white;
+            border: 1px solid rgba(0,0,0,0.05);
         }
-        .ui.rounded.image {
-            border-radius: 10px !important;
+        
+        .ui.items > .item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
+        
+        /* Кнопки управления */
+        .ui.grid .column .ui.button {
+            height: 45px;
+            padding: 0.8rem 2rem;
+            margin: 0.5rem 0;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+            background-color: var(--primary-color) !important;
+            color: white !important;
+        }
+        
+        .ui.grid .column .ui.button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .ui.grid .column .ui.red.button {
+            background-color: #e74c3c !important; /* Красный цвет */
+            color: white !important;
+            border: 1px solid #e74c3c !important;
+        }
+        /* Футер */
+        footer.ui.inverted.vertical.segment {
+        position: relative; /* Изменено */
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        padding: 10px 0;
+        background-color: rgba(44, 62, 80, 0.9) !important;
+        backdrop-filter: blur(5px);
+        z-index: 1000;
+        pointer-events: none;
+}
+        
+        /* Поисковая форма */
+        .ui.category.search {
+            width: 350px;
+            margin: 0 auto;
+        }
+        
+        .ui.category.search .prompt {
+            padding: 0.8rem 1rem;
+            border-radius: 25px;
+            border: 2px solid var(--primary-color);
+        }
+        
+        /* Плейсхолдер */
         .ui.placeholder.segment {
-            text-align: center;
-            padding: 3em;
+            background-color: white;
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+        
+        /* Пагинация */
         .ui.pagination.menu {
-            margin-top: 2em;
             justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .ui.pagination.menu .item {
+            margin: 0 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: background 0.3s ease;
+        }
+        
+        .ui.pagination.menu .item:hover {
+            background-color: #f0f0f0;
+        }
+        
+        /* Выделение текущего сезона */
+        .ui.items > .item.positive {
+            background-color: var(--accent-color);
+            border-left: 3px solid var(--primary-color);
+            box-shadow: 0 0 5px rgba(46, 204, 113, 0.2);
+        }
+        
+        .ui.header.positive {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .ui.main.text.container {
+                padding: 1rem 0;
+            }
+            
+            .ui.items > .item {
+                margin: 1rem 0;
+            }
+            
+            .ui.category.search {
+                width: 100%;
+            }
         }
         footer.ui.inverted.vertical.segment {
             position: fixed;
@@ -55,12 +171,20 @@
             right: 0;
             width: 100%;
             padding: 10px 0;
-            text-align: center;
+            background-color: rgba(44, 62, 80, 0.9) !important;
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            pointer-events: none; /* Позволяет кликать на элементы под футером */
         }
+        
+        /* Для контейнера контента */
         .ui.main.text.container {
-            padding-top: 50px;
-            padding-bottom: 60px; /* Добавляем отступ снизу */
-        }
+    padding-bottom: 60px; /* Изменено */
+    min-height: calc(100vh - 120px);
+    box-sizing: border-box; /* Добавлено */
+}
+        
+        
     </style>
 </head>
 
@@ -90,7 +214,7 @@
               <form action="#" method='get' class='ui form'>
                 <div class="ui category search">
                   <div class="ui icon input">
-                    <input class="prompt" type="text" placeholder="Search animals...">
+                    <input class="prompt" type="text" placeholder="Поиск...">
                     <i class="search icon"></i>
                   </div>
                   <div class="results"></div>
@@ -101,28 +225,28 @@
     </nav>
 
     <!-- Основной контент страницы -->
-    <div class='ui main text container' style="padding-top: 50px;">
+    <div class='ui main.text.container'>
         {% block content %}{% endblock %}
     </div>
 
-    <!-- Футер сайта с дополнительной информацией о сайте и ссылками на социальные сети-->
-    <footer class='ui inverted vertical segment' style="padding: 10px 0;">
-        &copy; {{ year }} Киносайт.
-        Все права защищены.
+<!-- В base.html -->
 
-        <!-- Ссылки на социальные сети (например)-->
-        Следите за нами в:
-        &nbsp;<i class="facebook icon"></i>&nbsp;
-        &nbsp;<i class="twitter icon"></i>&nbsp;
-        &nbsp;<i class="vk icon"></i>&nbsp;
-    </footer>
 
+    <!-- Скрипты -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 
-    <!-- Блок для дополнительных скриптов или JavaScript кода-->
-    <script>{% block scripts %}{% endblock scripts %}</script>
-    {% block extra_js %}{% endblock extra_js %}
+    <!-- Инициализация компонентов -->
+    <script>
+        $(document).ready(function() {
+            $('.ui.dropdown').dropdown();
+            $('.ui.accordion').accordion();
+            $('.ui.checkbox').checkbox();
+        });
+    </script>
 
+    <!-- Блок для дополнительных скриптов -->
+    {% block scripts %}{% endblock scripts %}
+    {% block extra_js %}{% endblock extra_js %}
 </body>
 </html>
