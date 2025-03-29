@@ -169,7 +169,7 @@ class VideoSeriesSeasonCreateUpdateView(TemplateResponseMixin,View):
             if not id:
                 Content.objects.create(season=self.season,
                                        item=obj)
-            return redirect('list_user_series')
+            return redirect('series_season_user',self.season.id)
         return self.render_to_response({'form':form,
                                         'object':self.obj})
     
@@ -194,3 +194,14 @@ class SeasonVideoView(TemplateResponseMixin,View):
                                    series__user=request.user)
         return self.render_to_response({'season':season})
     
+
+#Удаление видео с сайта. аккаунт модератора
+class DeleteVideoSeriesView(View):
+    def post(self,request,id):
+        content = get_object_or_404(Content,
+                                    id=id,
+                                    season__series__user=request.user)
+        season = content.season
+        content.item.delete()
+        content.delete()
+        return redirect('series_season_user',season.id)  

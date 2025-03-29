@@ -79,13 +79,23 @@
                     </div>
                 </div>
                 <div class="extra content">
-                    <a href="{% url 'content_video_update' model_name='video' season_id=season.id id=content.item.id %}" 
-                       class="ui mini orange button">
-                        <i class="edit icon"></i>
-                        Редактировать
-                    </a>
+                    <!-- Контейнер для кнопок -->
+                    <div class="buttons-container" style="display: flex; gap: 10px;">
+                        <a href="{% url 'content_video_update' model_name='video' season_id=season.id id=content.item.id %}" 
+                           class="ui mini orange button">
+                            <i class="edit icon"></i>
+                            Редактировать
+                        </a>
+                        <form action="{% url "delete_video_season_series" content.id %}" method="post">
+                            {% csrf_token %}
+                            <button class="ui mini red button">    
+                                <i class="edit icon"></i>
+                                Удалить
+                            </button>    
+                        </form>
+                    </div>
                 </div>
-            </div>
+                
             {% empty %}
             <div class="ui warning message">
                 <i class="exclamation circle icon"></i>

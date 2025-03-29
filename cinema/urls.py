@@ -14,5 +14,6 @@ urlpatterns = [
          name='content_video_update'),
      path('list-series/',views.SeriesCinemaListView.as_view(),name='list_series'),
      path('detail-series/<int:id>/<str:slug>/',views.SeriesDetailView.as_view(),name='series_detail'),
-     path('season-series/<int:season_id>/',views.SeasonVideoView.as_view(),name='series_season_user')
+     path('season-series/<int:season_id>/',views.SeasonVideoView.as_view(),name='series_season_user'),
+     path('delete-video/<int:id>/delete/',views.DeleteVideoSeriesView.as_view(),name='delete_video_season_series'),
 ]
