@@ -10,6 +10,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.base import View,TemplateResponseMixin
 from django.views.generic.edit import CreateView,DeleteView,UpdateView
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 
 class UserMixin:
     def get_queryset(self):
@@ -183,6 +184,19 @@ class SeriesDetailView(DetailView):
     model = Series
     template_name = 'series/series_home_page/detail_series.html'
     context_object_name = 'series'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        seasons = self.object.season_series.all()
+        context['seasons'] = [
+            {
+                'season': season,
+                'contents': season.content_set.all()  
+                # Получаем все контенты для каждого сезона
+            }
+            for season in seasons
+        ]
+        return context
 
 #Предоставление просомтра юзером контента своих сериалов и редактитрования своего сериала
 class SeasonVideoView(TemplateResponseMixin,View):

@@ -1,109 +1,120 @@
 {% extends "base.html" %}
 
-{% block title %}Ваши сериалы{% endblock title %}
+{% block title %}Личный кабинет{% endblock title %}
 
 {% block content %}
 <div class="ui container">
-    <div class="ui vertical segment">
-        <h1 class="ui header">
-            <i class="film icon"></i>
-            Ваши сериалы
-        </h1>
-        
-        <!-- Кнопка добавления нового сериала -->
-        {% if user.is_authenticated %}
-            <div class="ui center aligned segment">
-                <a href="{% url 'add_series_user' %}" 
-                   class="ui large green button">
-                    <i class="plus icon"></i>
-                    Добавить новый сериал
-                </a>
+    <!-- Заголовок личного кабинета -->
+    <div class="ui vertical segment" style="padding: 3rem; border-radius: 15px; background-color: #f9f9f9;">
+        <div class="ui grid">
+            <!-- Фото пользователя -->
+            <div class="four wide column center aligned">
+                <div class="ui medium circular image" style="width: 150px; height: 150px; overflow: hidden; border: 3px solid var(--primary-color);">
+                    {% if user.profile.photo %}
+                        <img src="{{ user.profile.photo.url }}" alt="{{ user.username }}" style="object-fit: cover; width: 100%; height: 100%;">
+                    {% else %}
+                        <i class="user circle outline icon" style="font-size: 100px; color: #ccc;"></i>
+                    {% endif %}
+                </div>
             </div>
-        {% endif %}
+
+            <!-- Информация о пользователе -->
+            <div class="twelve wide column">
+                <h1 class="ui header" style="font-size: 2.5rem; color: var(--dark-color);">
+                    <i class="user icon"></i>
+                    {{ user.username }}
+                </h1>
+                <p style="font-size: 1.2rem; line-height: 1.6; color: #555;">Добро пожаловать в ваш личный кабинет! Здесь вы можете управлять своими сериалами.</p>
+            </div>
+        </div>
     </div>
 
+    <!-- Кнопка добавления нового сериала -->
+    {% if user.is_authenticated %}
+        <div class="ui center aligned segment" style="padding: 2rem; border-radius: 15px; background-color: #f9f9f9;">
+            <a href="{% url 'add_series_user' %}" 
+               class="ui large green button" style="font-size: 1.2rem; box-shadow: 0 2px 5px rgba(0,0,0,0.15);">
+                <i class="plus icon"></i>
+                Добавить новый сериал
+            </a>
+        </div>
+    {% endif %}
+
+    <!-- Список сериалов -->
     {% if object_list %}
-        <div class="ui divided items">
+        <div class="ui four column stackable grid" style="margin-top: 2rem;">
             {% for series in object_list %}
-                <div class="item">
-                    <div class="content">
+                <div class="column">
+                    <div class="ui card" style="border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
                         <!-- Изображение сериала -->
-                        <div class="image">
+                        <div class="image" style="overflow: hidden; border-radius: 15px 15px 0 0;">
                             {% if series.cover %}
                                 <img src="{{ series.cover.url }}" 
                                      alt="{{ series.name }}" 
-                                     class="ui medium rounded image"
-                                     style="width: 150px; height: 200px; object-fit: cover;">
+                                     style="width: 100%; height: 250px; object-fit: cover;">
                             {% else %}
-                                <div class="ui medium rounded image placeholder"
-                                     style="width: 150px; height: 200px; background-color: #f0f0f0;">
+                                <div class="ui placeholder"
+                                     style="width: 100%; height: 250px; background-color: #f0f0f0;">
                                     <i class="video icon" style="font-size: 50px; color: #ccc;"></i>
                                 </div>
                             {% endif %}
                         </div>
 
                         <!-- Основная информация -->
-                        <div class="content">
-                            <div class="header">
-                                <a href="#" class="ui medium header">{{ series.name }}</a>
-                            </div>
+                        <div class="content" style="padding: 1.5rem;">
+                            <h3 class="header" style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--dark-color);">
+                                <a href="#" style="color: inherit;">{{ series.name }}</a>
+                            </h3>
                             
                             <!-- Мета-информация -->
-                            <div class="meta">
-                                <span class="cinema">
-                                    <i class="building icon"></i> {{ series.studio }}
-                                </span>
+                            <div class="meta" style="font-size: 1rem; color: #777;">
+                                <span><i class="building icon"></i> {{ series.studio }}</span>
                             </div>
                             
                             <!-- Краткое описание -->
-                            <div class="description">
-                                {{ series.description|truncatewords:20 }}
-                            </div>
+                            <p style="margin-top: 1rem; font-size: 1.1rem; color: #555;">{{ series.description|truncatewords:20 }}</p>
                         </div>
-
+                        
                         <!-- Кнопки управления -->
-                        <div class="extra content">
-                            <div class="ui grid">
-                                <div class="four wide column">
-                                    {% if user.is_authenticated and user == series.user %}
-                                        {% if series.season_series.exists %}
-                                            <a href="{% url 'series_season_user' series.season_series.first.id %}" 
-                                               class="ui mini primary button">
-                                                <i class="edit icon"></i>
-                                                Редактировать сезоны
-                                            </a>
-                                        {% else %}
-                                            <a href="{% url 'add_season_user_series' series.pk %}" 
-                                               class="ui mini positive button">
-                                                <i class="plus icon"></i>
-                                                Добавить сезон
-                                            </a>
-                                        {% endif %}
+                        <div class="extra content" style="padding: 1rem; text-align: center;">
+                            {% if user.is_authenticated and user == series.user %}
+                                <div class="ui two buttons">
+                                    {% if series.season_series.exists %}
+                                        <a href="{% url 'series_season_user' series.season_series.first.id %}" 
+                                           class="ui primary button" style="font-size: 1rem;">
+                                            <i class="edit icon"></i>
+                                            Добавить серии
+                                        </a>
+                                    {% else %}
+                                        <a href="{% url 'add_season_user_series' series.pk %}" 
+                                           class="ui positive button" style="font-size: 1rem;">
+                                            <i class="plus icon"></i>
+                                            Добавить сезон
+                                        </a>
                                     {% endif %}
-                                </div>
-                                <div class="twelve wide column">
                                     <a href="{% url 'delete_series' series.pk %}" 
-                                       class="ui mini red button">
+                                       class="ui red button" style="font-size: 1rem;">
                                         <i class="trash icon"></i>
                                         Удалить
                                     </a>
                                 </div>
-                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
     {% else %}
-        <div class="ui placeholder segment">
-            <div class="ui icon header">
+        <!-- Плейсхолдер, если нет сериалов -->
+        <div class="ui placeholder segment" style="padding: 4rem; border-radius: 15px; background-color: #f9f9f9; text-align: center;">
+            <div class="ui icon header" style="font-size: 1.5rem; color: #555;">
                 <i class="film icon"></i>
                 Вы пока не добавили ни одного сериала
             </div>
             
             {% if user.is_authenticated %}
                 <a href="{% url 'add_series_user' %}" 
-                   class="ui green button">
+                   class="ui green button" style="font-size: 1.2rem;">
                     <i class="plus icon"></i>
                     Добавить новый сериал
                 </a>

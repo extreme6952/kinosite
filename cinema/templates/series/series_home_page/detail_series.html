@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ series.name }}
+{% endblock title %}
+
+{% block content %}
+<div class="ui container">
+    <!-- Заголовок -->
+    <div class="ui segment" style="background-color: var(--primary-color); color: white; border-radius: 12px; padding: 2rem; margin-bottom: 2rem; text-align: center;">
+        <h1 class="ui header" style="font-size: 2.5rem;">{{ series.name }}</h1>
+    </div>
+
+    <div class="ui grid">
+        <!-- Обложка и описание -->
+        <div class="four wide column">
+            <div class="ui segment" style="border-radius: 12px; padding: 1rem; text-align: center;">
+                <img src="{{ series.cover.url }}" alt="{{ series.name }}" class="ui small image" style="border-radius: 12px; margin: 0 auto;">
+                <p style="margin-top: 1rem; font-size: 1rem; color: #555;">{{ series.description|linebreaks}}</p>
+            </div>
+        </div>
+
+        <!-- Контент сериала и сезоны -->
+        <div class="twelve wide column">
+            <!-- Выбор сезона -->
+            <div class="ui stackable grid" style="margin-bottom: 1rem;">
+                {% for season_data in seasons %}
+                    <div class="four wide column">
+                        <div class="ui segment season-segment {% if season_data.season.id == seasons.0.season.id %}current-season{% endif %}"
+                             data-season-id="{{ season_data.season.id }}"
+                             style="border-radius: 12px; padding: 0.75rem; cursor: pointer; text-align: center;">
+                            <h4 class="ui header" style="color: var(--primary-color); font-size: 1.2rem;">Сезон {{ season_data.season.counter|add:1 }}</h4>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Выбор серии и отображение -->
+            <div class="ui segment" id="seasonContents" style="border-radius: 12px; padding: 1rem;">
+                {% for season_data in seasons %}
+                    <div id="season-{{ season_data.season.id }}" class="season-content" style="{% if not forloop.first %}display:none;{% endif %}">
+                        <h3 class="ui header" style="color: var(--primary-color);">Сезон {{ season_data.season.counter|add:1 }}</h3>
+                        <p>{{ season_data.season.description }}</p>
+
+                        <!-- Список эпизодов -->
+                        <div class="ui relaxed list" style="margin: 0.25rem; padding: 0.25rem; background-color: #f9f9f9; border-radius: 4px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);">
+                            {% for content in season_data.contents %}
+                                <div class="item" style="padding: 0.25rem; border-bottom: 1px solid #ddd; display: flex; align-items: center;">
+                                    <i class="video icon" style="font-size: 14px; color: #007bff; margin-right: 0.25rem;"></i>
+                                    <div class="content">
+                                        <a href="#" class="header" style="font-size: 14px; font-weight: bold; color: #333;">{{ content.item.title }} №{{ content.counter|add:1 }}</a>
+                                        
+                                        <!-- Видеоплеер -->
+                                        <div class="ui embed" style="margin-top: 0.25rem; position: relative; overflow: hidden; border-radius: 2px;">
+                                            <video controls class="ui fluid image" style="width: 100%; height: auto; background-color: black;">
+                                                <source src="{{ content.item.video.url }}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        </div>
+                                        
+                                        <div class="description" style="margin-top: 0.1rem; font-size: 10px; color: #666;">Добавлено {{ content.created }}</div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Комментарии -->
+    <div class="ui segment" style="margin-top: 3rem; border-radius: 12px; padding: 1rem;">
+        <h3 class="ui dividing header" style="color: var(--dark-color);">Комментарии</h3>
+
+        <!-- Форма для добавления комментария -->
+        <form class="ui form">
+            <div class="field">
+                <label style="color: var(--dark-color);">Оставить комментарий:</label>
+                <textarea rows="3"></textarea>
+            </div>
+            <button class="ui primary button" type="submit">Отправить</button>
+        </form>
+
+        <!-- Существующие комментарии (имитация) -->
+        <div class="ui comments" style="margin-top: 2rem;">
+            <div class="comment">
+                <a class="avatar">
+                    <img src="https://semantic-ui.com/images/avatar/small/matt.jpg">
+                </a>
+                <div class="content">
+                    <a class="author">Мэтт</a>
+                    <div class="metadata">
+                        <span class="date">Сегодня в 5:42</span>
+                    </div>
+                    <div class="text">
+                        Это отличный сериал! Мне особенно понравился этот эпизод.
+                    </div>
+                </div>
+            </div>
+            <div class="comment">
+                <a class="avatar">
+                    <img src="https://semantic-ui.com/images/avatar/small/elliot.jpg">
+                </a>
+                <div class="content">
+                    <a class="author">Эллиот</a>
+                    <div class="metadata">
+                        <span class="date">Вчера в 12:30</span>
+                    </div>
+                    <div class="text">
+                        Согласен, этот сезон просто потрясающий!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Дополнительные стили */
+    .season-segment {
+        background-color: var(--accent-color);
+        transition: all 0.3s ease;
+    }
+
+    .season-segment:hover {
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .season-segment.current-season {
+        box-shadow: 0 0 0 2px var(--primary-color);
+    }
+
+    .season-content {
+        display: none;
+    }
+
+    /* Дополнительные стили для видео */
+    .ui.embed {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 aspect ratio */
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+    }
+
+    .ui.embed video, 
+    .ui.embed iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Показать первый сезон по умолчанию
+        showSeasonContents($('.season-segment').first().data('season-id'));
+
+        // Обработчик клика
+        $('.season-segment').click(function() {
+            showSeasonContents($(this).data('season-id'));
+        });
+    });
+
+    function showSeasonContents(seasonId) {
+        // Скрыть все блоки с контентом сезонов
+        $('.season-content').hide();
+
+        // Показать выбранный сезон
+        $('#season-' + seasonId).show();
+
+        // Обновить выделение сезона
+        $('.season-segment').removeClass('current-season');
+        $(`.season-segment[data-season-id="${seasonId}"]`).addClass('current-season');
+    }
+</script>
+{% endblock content %}
