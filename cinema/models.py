@@ -42,8 +42,6 @@ class Season(models.Model):
     series = models.ForeignKey(Series,
                                on_delete=models.CASCADE,
                                related_name='season_series')
-    cover = models.ImageField(upload_to='images/',blank=True)
-    description = models.TextField(blank=True)
     created = models.DateField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     counter = OrderField(blank=True,for_fields=['series'])

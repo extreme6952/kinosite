@@ -65,15 +65,10 @@ class SeriesUserListView(UserSeriesMixin,ListView):
     template_name = 'series/series_redaction_user/list_series_user.html'
 
 class AddSeasonSeriesView(TemplateResponseMixin,View):
-    template_name = 'series/series_redaction_user/form_add_season.html'
+    template_name = 'series/series_redaction_user/list_series_user.html'
     series = None
 
-    def get_formset(self,data=None):
-        return formset_season(instance=self.series,
-                              data=data)
-    
     def dispatch(self, request, pk ,*args, **kwargs):
-
         self.series = get_object_or_404(Series,
                                         id=pk,
                                         user=request.user)
@@ -81,21 +76,11 @@ class AddSeasonSeriesView(TemplateResponseMixin,View):
         return super().dispatch(request,pk,*args, **kwargs)
      
     def get(self,request,pk):
-        form = self.get_formset()
-        return self.render_to_response({
-            'form':form,
-            'series':self.series
-        })
-
-    def post(self,request,pk,*args, **kwargs):
-        form = self.get_formset(data=request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('list_user_series')
-        return self.render_to_response({
-            'form':form,
-            'series':self.series
-        })
+        return self.render_to_response({'series':self.series,})
+    
+    def post(self,request,pk):
+        season = Season.objects.create(series=self.series)
+        return redirect('series_season_user',season.pk)
     
 # Запрос приходит на URL, связанный с этим представлением. Например:
 # /courses/module/1/content/text/2/, где:

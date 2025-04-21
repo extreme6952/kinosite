@@ -86,11 +86,13 @@
                                             Добавить серии
                                         </a>
                                     {% else %}
-                                        <a href="{% url 'add_season_user_series' series.pk %}" 
-                                           class="ui positive button" style="font-size: 1rem;">
-                                            <i class="plus icon"></i>
-                                            Добавить сезон
-                                        </a>
+                                        <form action="{% url "add_season_user_series" series.pk %}" method="post" style="display:inline;">
+                                            {% csrf_token %}
+                                            <button type="submit" class="ui positive button" style="font-size: 1rem;">
+                                                <i class="plus icon"></i>
+                                                Добавить сезон
+                                            </button>
+                                        </form>
                                     {% endif %}
                                     <a href="{% url 'delete_series' series.pk %}" 
                                        class="ui red button" style="font-size: 1rem;">

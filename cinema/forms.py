@@ -2,10 +2,9 @@ from .models import *
 from django import forms
 from django.forms.models import inlineformset_factory
 
-formset_season = inlineformset_factory(Series,
-                                Season,
-                                fields=['description'],
-                                extra=2)
+class AddSeasonForm(forms.Form):
+    season = forms.ModelChoiceField(queryset=Season.objects.all(),
+                                    widget=forms.HiddenInput) 
 
 class AddSeriesUser(forms.ModelForm):
     class Meta:
