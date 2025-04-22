@@ -1,0 +1,807 @@
+[
+    {
+      "model": "cinema.comment",
+      "pk": 1,
+      "fields": {
+        "user": 1,
+        "text": "132",
+        "content_type": 1,
+        "object_id": 1,
+        "created": "2025-03-30T18:25:57.565Z",
+        "updated": "2025-03-30T18:26:01.428Z"
+      }
+    },
+    {
+      "model": "cinema.series",
+      "pk": 4,
+      "fields": {
+        "user": 1,
+        "name": "Рик и Морти",
+        "cover": "images/rick-and-morty_vpbYfTc.jpg",
+        "slug": "rik-i-morti-",
+        "description": "Рик и Морти - американский анимационный научно-фантастический ситком. Сериал - про безумного ученого, алкоголика Рика Санчеза и его внука Морти Смита, который всегда с ним ходит в разные безумные приключения. Они вместе путешествуют по бесконечным мирам и вселенным, сталкиваясь с разными существами и решая невероятные проблемы. В каждой серии они показывают нам новые грани и грани вселенной, а также поднимают разные философские темы, которые заставляют зрителя задуматься.",
+        "created": "2025-03-21",
+        "updated": "2025-04-13",
+        "studio": "Justin Roiland's Solo Vanity Card Productions Dan Harmon Productions Starburns Industries Williams Street"
+      }
+    },
+    {
+      "model": "cinema.series",
+      "pk": 5,
+      "fields": {
+        "user": 1,
+        "name": "Обратная сторона Земли",
+        "cover": "images/Solar_Opposites_jR0J0aF.jpg",
+        "slug": "obratnaia-storona-zemli",
+        "description": "Мультсериал про семью пришельцев, которые вынуждены жить на Земле и пытаются найти свое место в нашей безумной планете. Каждый эпизод наполнен черным юмором и разными ситуациями, в которые они попадают из-за того, что они инопланетяне.",
+        "created": "2025-04-13",
+        "updated": "2025-04-13",
+        "studio": "Justin Roiland's Solo Vanity Card Productions Dan Harmon Productions Starburns Industries Williams Street"
+      }
+    },
+    {
+      "model": "cinema.series",
+      "pk": 7,
+      "fields": {
+        "user": 1,
+        "name": "Все ненавидят Криса",
+        "cover": "images/Everybody_Hates_Chris_Logo.png",
+        "slug": "vse-nenavidiat-krisa",
+        "description": "Все ненавидят Криса (англ. Everybody Hates Chris) — американский комедийный телесериал. Сериал основан на реальных событиях из детства американского комика-актёра Криса Рока, который также является рассказчиком сериала. Действие сериала происходит в Нью-Йорке в период с 1982 по 1987 год. Название сериала является пародией названия популярного телесериала Все любят Раймонда, который транслировался на Си-би-эс: как Криса все ненавидят.",
+        "created": "2025-04-21",
+        "updated": "2025-04-21",
+        "studio": "Кто я, Кто я"
+      }
+    },
+    {
+      "model": "cinema.series",
+      "pk": 11,
+      "fields": {
+        "user": 1,
+        "name": "Увадждлявжха",
+        "cover": "images/рива_05.jpg",
+        "slug": "yvazhdlyvzha",
+        "description": "ЫВАЖДЛЫВЖХА",
+        "created": "2025-04-21",
+        "updated": "2025-04-21",
+        "studio": "ЫВАЖДЛЫВЖХАЫВАЖДЛЫВЖХА"
+      }
+    },
+    {
+      "model": "cinema.season",
+      "pk": 8,
+      "fields": {
+        "series": 4,
+        "created": "2025-03-27",
+        "updated": "2025-03-27T10:51:19.442Z",
+        "counter": 0
+      }
+    },
+    {
+      "model": "cinema.season",
+      "pk": 9,
+      "fields": {
+        "series": 4,
+        "created": "2025-04-13",
+        "updated": "2025-04-12T23:25:51.890Z",
+        "counter": 1
+      }
+    },
+    {
+      "model": "cinema.season",
+      "pk": 12,
+      "fields": {
+        "series": 5,
+        "created": "2025-04-21",
+        "updated": "2025-04-21T02:52:58.119Z",
+        "counter": 0
+      }
+    },
+    {
+      "model": "cinema.season",
+      "pk": 13,
+      "fields": {
+        "series": 5,
+        "created": "2025-04-21",
+        "updated": "2025-04-21T02:53:35.392Z",
+        "counter": 1
+      }
+    },
+    {
+      "model": "cinema.season",
+      "pk": 14,
+      "fields": {
+        "series": 5,
+        "created": "2025-04-21",
+        "updated": "2025-04-21T02:53:46.955Z",
+        "counter": 2
+      }
+    },
+    {
+      "model": "cinema.season",
+      "pk": 15,
+      "fields": {
+        "series": 7,
+        "created": "2025-04-21",
+        "updated": "2025-04-21T03:17:48.387Z",
+        "counter": 0
+      }
+    },
+    {
+      "model": "cinema.season",
+      "pk": 23,
+      "fields": {
+        "series": 11,
+        "created": "2025-04-21",
+        "updated": "2025-04-21T03:37:20.431Z",
+        "counter": 0
+      }
+    },
+    {
+      "model": "cinema.content",
+      "pk": 5,
+      "fields": {
+        "season": 8,
+        "content_type": 1,
+        "counter": 0,
+        "object_id": 5,
+        "created": "2025-03-30",
+        "updated": "2025-03-30"
+      }
+    },
+    {
+      "model": "cinema.content",
+      "pk": 6,
+      "fields": {
+        "season": 9,
+        "content_type": 1,
+        "counter": 0,
+        "object_id": 6,
+        "created": "2025-04-13",
+        "updated": "2025-04-13"
+      }
+    },
+    {
+      "model": "cinema.content",
+      "pk": 7,
+      "fields": {
+        "season": 8,
+        "content_type": 1,
+        "counter": 1,
+        "object_id": 7,
+        "created": "2025-04-13",
+        "updated": "2025-04-13"
+      }
+    },
+    {
+      "model": "cinema.video",
+      "pk": 5,
+      "fields": {
+        "user": 1,
+        "title": "Трейлер Ван",
+        "created": "2025-03-30",
+        "updated": "2025-03-30",
+        "video": "video/11_-_Трейлер_Ван_WxPHdyZ_rRFWpXM_RKEbmiB.mp4"
+      }
+    },
+    {
+      "model": "cinema.video",
+      "pk": 6,
+      "fields": {
+        "user": 1,
+        "title": "Мультипликационные приколы",
+        "created": "2025-04-13",
+        "updated": "2025-04-13",
+        "video": "video/1_-_Мультипликационные_приколы.mp4"
+      }
+    },
+    {
+      "model": "cinema.video",
+      "pk": 7,
+      "fields": {
+        "user": 1,
+        "title": "Футбольные Проишествия",
+        "created": "2025-04-13",
+        "updated": "2025-04-13",
+        "video": "video/2_-_Футбольные-Проишествия.mp4"
+      }
+    },
+    {
+      "model": "cinema.video",
+      "pk": 8,
+      "fields": {
+        "user": 1,
+        "title": "Мультипликационные",
+        "created": "2025-04-13",
+        "updated": "2025-04-13",
+        "video": "video/1_-_Мультипликационные_приколы_Kcke8Js.mp4"
+      }
+    },
+    {
+      "model": "admin.logentry",
+      "pk": 1,
+      "fields": {
+        "action_time": "2025-03-30T18:25:57.565Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "1",
+        "object_repr": "comment",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+      }
+    },
+    {
+      "model": "admin.logentry",
+      "pk": 2,
+      "fields": {
+        "action_time": "2025-03-30T18:26:01.428Z",
+        "user": 1,
+        "content_type": 11,
+        "object_id": "1",
+        "object_repr": "comment",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Object id\"]}}]"
+      }
+    },
+    {
+      "model": "admin.logentry",
+      "pk": 3,
+      "fields": {
+        "action_time": "2025-03-30T18:40:31.248Z",
+        "user": 1,
+        "content_type": 2,
+        "object_id": "4",
+        "object_repr": "Рик и Морти",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Name\", \"Slug\", \"Description\"]}}]"
+      }
+    },
+    {
+      "model": "admin.logentry",
+      "pk": 4,
+      "fields": {
+        "action_time": "2025-04-13T03:09:42.475Z",
+        "user": 1,
+        "content_type": 2,
+        "object_id": "4",
+        "object_repr": "Рик и Морти",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Studio\"]}}]"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 1,
+      "fields": {
+        "name": "Can add video",
+        "content_type": 1,
+        "codename": "add_video"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 2,
+      "fields": {
+        "name": "Can change video",
+        "content_type": 1,
+        "codename": "change_video"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 3,
+      "fields": {
+        "name": "Can delete video",
+        "content_type": 1,
+        "codename": "delete_video"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 4,
+      "fields": {
+        "name": "Can view video",
+        "content_type": 1,
+        "codename": "view_video"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 5,
+      "fields": {
+        "name": "Can add series",
+        "content_type": 2,
+        "codename": "add_series"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 6,
+      "fields": {
+        "name": "Can change series",
+        "content_type": 2,
+        "codename": "change_series"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 7,
+      "fields": {
+        "name": "Can delete series",
+        "content_type": 2,
+        "codename": "delete_series"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 8,
+      "fields": {
+        "name": "Can view series",
+        "content_type": 2,
+        "codename": "view_series"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 9,
+      "fields": {
+        "name": "Can add season",
+        "content_type": 3,
+        "codename": "add_season"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 10,
+      "fields": {
+        "name": "Can change season",
+        "content_type": 3,
+        "codename": "change_season"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 11,
+      "fields": {
+        "name": "Can delete season",
+        "content_type": 3,
+        "codename": "delete_season"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 12,
+      "fields": {
+        "name": "Can view season",
+        "content_type": 3,
+        "codename": "view_season"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 13,
+      "fields": {
+        "name": "Can add content",
+        "content_type": 4,
+        "codename": "add_content"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 14,
+      "fields": {
+        "name": "Can change content",
+        "content_type": 4,
+        "codename": "change_content"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 15,
+      "fields": {
+        "name": "Can delete content",
+        "content_type": 4,
+        "codename": "delete_content"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 16,
+      "fields": {
+        "name": "Can view content",
+        "content_type": 4,
+        "codename": "view_content"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 17,
+      "fields": {
+        "name": "Can add log entry",
+        "content_type": 5,
+        "codename": "add_logentry"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 18,
+      "fields": {
+        "name": "Can change log entry",
+        "content_type": 5,
+        "codename": "change_logentry"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 19,
+      "fields": {
+        "name": "Can delete log entry",
+        "content_type": 5,
+        "codename": "delete_logentry"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 20,
+      "fields": {
+        "name": "Can view log entry",
+        "content_type": 5,
+        "codename": "view_logentry"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 21,
+      "fields": {
+        "name": "Can add permission",
+        "content_type": 6,
+        "codename": "add_permission"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 22,
+      "fields": {
+        "name": "Can change permission",
+        "content_type": 6,
+        "codename": "change_permission"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 23,
+      "fields": {
+        "name": "Can delete permission",
+        "content_type": 6,
+        "codename": "delete_permission"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 24,
+      "fields": {
+        "name": "Can view permission",
+        "content_type": 6,
+        "codename": "view_permission"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 25,
+      "fields": {
+        "name": "Can add group",
+        "content_type": 7,
+        "codename": "add_group"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 26,
+      "fields": {
+        "name": "Can change group",
+        "content_type": 7,
+        "codename": "change_group"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 27,
+      "fields": {
+        "name": "Can delete group",
+        "content_type": 7,
+        "codename": "delete_group"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 28,
+      "fields": {
+        "name": "Can view group",
+        "content_type": 7,
+        "codename": "view_group"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 29,
+      "fields": {
+        "name": "Can add user",
+        "content_type": 8,
+        "codename": "add_user"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 30,
+      "fields": {
+        "name": "Can change user",
+        "content_type": 8,
+        "codename": "change_user"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 31,
+      "fields": {
+        "name": "Can delete user",
+        "content_type": 8,
+        "codename": "delete_user"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 32,
+      "fields": {
+        "name": "Can view user",
+        "content_type": 8,
+        "codename": "view_user"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 33,
+      "fields": {
+        "name": "Can add content type",
+        "content_type": 9,
+        "codename": "add_contenttype"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 34,
+      "fields": {
+        "name": "Can change content type",
+        "content_type": 9,
+        "codename": "change_contenttype"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 35,
+      "fields": {
+        "name": "Can delete content type",
+        "content_type": 9,
+        "codename": "delete_contenttype"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 36,
+      "fields": {
+        "name": "Can view content type",
+        "content_type": 9,
+        "codename": "view_contenttype"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 37,
+      "fields": {
+        "name": "Can add session",
+        "content_type": 10,
+        "codename": "add_session"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 38,
+      "fields": {
+        "name": "Can change session",
+        "content_type": 10,
+        "codename": "change_session"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 39,
+      "fields": {
+        "name": "Can delete session",
+        "content_type": 10,
+        "codename": "delete_session"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 40,
+      "fields": {
+        "name": "Can view session",
+        "content_type": 10,
+        "codename": "view_session"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 41,
+      "fields": {
+        "name": "Can add comment",
+        "content_type": 11,
+        "codename": "add_comment"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 42,
+      "fields": {
+        "name": "Can change comment",
+        "content_type": 11,
+        "codename": "change_comment"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 43,
+      "fields": {
+        "name": "Can delete comment",
+        "content_type": 11,
+        "codename": "delete_comment"
+      }
+    },
+    {
+      "model": "auth.permission",
+      "pk": 44,
+      "fields": {
+        "name": "Can view comment",
+        "content_type": 11,
+        "codename": "view_comment"
+      }
+    },
+    {
+      "model": "auth.user",
+      "pk": 1,
+      "fields": {
+        "password": "pbkdf2_sha256$600000$dNTYx8YY4PELz3sHEHYMIJ$kj4KL5h6UPiDEtepSp+Q1JibsvkRJI3RbKyj2qTIx7E=",
+        "last_login": "2025-04-21T02:33:47.305Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "kaz@gmail.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2025-03-21T14:49:43.523Z",
+        "groups": [],
+        "user_permissions": []
+      }
+    },
+    {
+      "model": "contenttypes.contenttype",
+      "pk": 1,
+      "fields": {
+        "app_label": "cinema",
+        "model": "video"
+      }
+    },
+    {
+      "model": "contenttypes.contenttype",
+      "pk": 2,
+      "fields": {
+        "app_label": "cinema",
+        "model": "series"
+      }
+    },
+    {
+      "model": "contenttypes.contenttype",
+      "pk": 3,
+      "fields": {
+        "app_label": "cinema",
+        "model": "season"
+      }
+    },
+    {
+      "model": "contenttypes.contenttype",
+      "pk": 4,
+      "fields": {
+        "app_label": "cinema",
+        "model": "content"
+      }
+    },
+    {
+      "model": "contenttypes.contenttype",
+      "pk": 5,
+      "fields": {
+        "app_label": "admin",
+        "model": "logentry"
+      }
+    },
+    {
+      "model": "contenttypes.contenttype",
+      "pk": 6,
+      "fields": {
+        "app_label": "auth",
+        "model": "permission"
+      }
+    },
+    {
+      "model": "contenttypes.contenttype",
+      "pk": 7,
+      "fields": {
+        "app_label": "auth",
+        "model": "group"
+      }
+    },
+    {
+      "model": "contenttypes.contenttype",
+      "pk": 8,
+      "fields": {
+        "app_label": "auth",
+        "model": "user"
+      }
+    },
+    {
+      "model": "contenttypes.contenttype",
+      "pk": 9,
+      "fields": {
+        "app_label": "contenttypes",
+        "model": "contenttype"
+      }
+    },
+    {
+      "model": "contenttypes.contenttype",
+      "pk": 10,
+      "fields": {
+        "app_label": "sessions",
+        "model": "session"
+      }
+    },
+    {
+      "model": "contenttypes.contenttype",
+      "pk": 11,
+      "fields": {
+        "app_label": "cinema",
+        "model": "comment"
+      }
+    },
+    {
+      "model": "sessions.session",
+      "pk": "19hfs03505htwpzigxh2vqspo9nt37bj",
+      "fields": {
+        "session_data": ".eJxVjEEOwiAURO_C2pAPBfpx6b5nIMAHqRpISrsy3t026UJ3k3lv5s2c39bitp4WNxO7MsEuv13w8ZnqAejh673x2Oq6zIEfCj9p51Oj9Lqd7t9B8b3sawVEgNYMKgoZNEajwARlVdYUKFtBAyRpdCYBOGKgcdgD5YQI0kvPPl_MCTdw:1txkp1:gAdRqy4t7rqIsftqdAXncYJWLA5YMryIgi8O41ScjTk",
+        "expire_date": "2025-04-10T10:50:51.650Z"
+      }
+    },
+    {
+      "model": "sessions.session",
+      "pk": "5t72c31jam099jt94p3zvirjmwabu8h6",
+      "fields": {
+        "session_data": ".eJxVjEEOwiAURO_C2pAPBfpx6b5nIMAHqRpISrsy3t026UJ3k3lv5s2c39bitp4WNxO7MsEuv13w8ZnqAejh673x2Oq6zIEfCj9p51Oj9Lqd7t9B8b3sawVEgNYMKgoZNEajwARlVdYUKFtBAyRpdCYBOGKgcdgD5YQI0kvPPl_MCTdw:1u6gyh:3TvJ1HGMvhq3JBqD-Dhm6t6zKHizJ_d7o6XZaa9PeSg",
+        "expire_date": "2025-05-05T02:33:47.305Z"
+      }
+    },
+    {
+      "model": "sessions.session",
+      "pk": "h0h4le8kaok2q27hi5inoikliggpiahz",
+      "fields": {
+        "session_data": ".eJxVjEEOwiAURO_C2pAPBfpx6b5nIMAHqRpISrsy3t026UJ3k3lv5s2c39bitp4WNxO7MsEuv13w8ZnqAejh673x2Oq6zIEfCj9p51Oj9Lqd7t9B8b3sawVEgNYMKgoZNEajwARlVdYUKFtBAyRpdCYBOGKgcdgD5YQI0kvPPl_MCTdw:1u44Ot:ZGPyt86X64vsMsb3g0tZxHYlWWsJLEYvsaHLuJFDgrk",
+        "expire_date": "2025-04-27T20:57:59.959Z"
+      }
+    },
+    {
+      "model": "sessions.session",
+      "pk": "jxckk54u20akx7rzj8wel3nb9fb6fou9",
+      "fields": {
+        "session_data": ".eJxVjEEOwiAURO_C2pAPBfpx6b5nIMAHqRpISrsy3t026UJ3k3lv5s2c39bitp4WNxO7MsEuv13w8ZnqAejh673x2Oq6zIEfCj9p51Oj9Lqd7t9B8b3sawVEgNYMKgoZNEajwARlVdYUKFtBAyRpdCYBOGKgcdgD5YQI0kvPPl_MCTdw:1tveiS:ZkrxQyg3fS7Ei7gSnSDIyW4EsqIYZG42OVoTQ3fc_HY",
+        "expire_date": "2025-04-04T15:55:24.795Z"
+      }
+    }
+  ]
+  
