@@ -1,11 +1,17 @@
 {% extends "base.html" %}
+{% load semanticui %}
+
+{% block title %}
+    Регистрация
+{% endblock title %}
+
 
 {% block content %}
-
-    <form method="post">
-        {{form.as_p}}
+    <form method="post" class="ui form">
         {% csrf_token %}
-        <input type="submit" value="Зарегистрироваться">
+        {% render_form form %}
+        <button class="ui primary button" type="submit">Зарегистрироваться</button>
     </form>
-
 {% endblock content %}
+
+
