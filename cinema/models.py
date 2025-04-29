@@ -89,4 +89,9 @@ class ItemBase(models.Model):
 
 class Video(ItemBase):
     video = models.FileField(upload_to='video/')
-
+    #Переопределяю метод delete,что бы удалялись media с 
+    # сервера вместе с удалением из бд
+    def delete(self,*args, **kwargs):
+        self.video.close()
+        self.video.delete(save=False)
+        super(Video,self).delete(*args, **kwargs)

@@ -10,11 +10,11 @@
                 <i class="sign in icon"></i> Добро пожаловать!
             </h2>
             
-            <!-- Сообщения об ошибках -->
-            {% if form.errors %}
+            <!-- Ваше кастомное сообщение об ошибке -->
+            {% if error %}
                 <div class="ui red message" style="border-radius: 8px; padding: 1rem;">
                     <i class="warning sign icon"></i>
-                    <p>Ваш логин или пароль неверен. Пожалуйста, попробуйте снова.</p>
+                    <p>{{ error }}</p>
                 </div>
             {% endif %}
 
@@ -28,6 +28,11 @@
                         <i class="user icon"></i> Логин
                     </label>
                     {{ form.username }}
+                    {% if form.username.errors %}
+                        <div class="ui red pointing above ui label">
+                            {{ form.username.errors|striptags }}
+                        </div>
+                    {% endif %}
                 </div>
 
                 <!-- Поле пароля -->
@@ -36,13 +41,32 @@
                         <i class="lock icon"></i> Пароль
                     </label>
                     {{ form.password }}
+                    {% if form.password.errors %}
+                        <div class="ui red pointing above ui label">
+                            {{ form.password.errors|striptags }}
+                        </div>
+                    {% endif %}
                 </div>
-
+                <div class="field" style="margin-bottom: 1rem;">
+                    <label for="{{ form.captcha.id_for_label }}" style="font-weight: 600; color: #2c3e50;">
+                        <i class="shield alternate icon"></i> Подтвердите, что вы не робот
+                    </label>
+                    {{ form.captcha }}
+                    {% if form.captcha.errors %}
+                        <div class="ui red pointing above ui label">
+                            {{ form.captcha.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+            
                 <!-- Кнопка входа -->
                 <button type="submit" class="ui teal button fluid" style="border-radius: 25px; padding: 1rem;">
                     <i class="sign in icon"></i> Войти
                 </button>
             </form>
+
+        <!-- Поле капчи -->
+
 
             <!-- Ссылки -->
             <div class="ui message" style="border-radius: 8px; padding: 1rem; margin-top: 1rem;">

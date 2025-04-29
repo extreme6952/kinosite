@@ -19,9 +19,12 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_view
+from cinema.views import UserLoginView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('series-users/',include('cinema.urls')),
-    path('accounts/login/',auth_view.LoginView.as_view(),name='login'),
-    path('accounts/logout/',auth_view.LogoutView.as_view(),name='logout')
+    path('accounts/login/',UserLoginView.as_view(),name='login'),
+    path('accounts/logout/',auth_view.LogoutView.as_view(),name='logout'),
+    path('captcha/',include('captcha.urls')),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
