@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Вход в систему{% endblock title %}
+
+{% block content %}
+<div class="ui middle aligned center aligned grid" style="height: 100vh; background: #f8f9fa;">
+    <div class="column" style="max-width: 450px; padding: 2rem;">
+        <div class="ui raised segment" style="border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.1);">
+            <h2 class="ui teal header" style="font-size: 2rem; margin-bottom: 1.5rem;">
+                <i class="sign in icon"></i> Добро пожаловать!
+            </h2>
+            
+            <!-- Ваше кастомное сообщение об ошибке -->
+            {% if error %}
+                <div class="ui red message" style="border-radius: 8px; padding: 1rem;">
+                    <i class="warning sign icon"></i>
+                    <p>{{ error }}</p>
+                </div>
+            {% endif %}
+
+            <!-- Форма входа -->
+            <form method="post" class="ui form" style="margin-top: 1rem;">
+                {% csrf_token %}
+                
+                <!-- Поле логина -->
+                <div class="field" style="margin-bottom: 1rem;">
+                    <label for="{{ form.username.id_for_label }}" style="font-weight: 600; color: #2c3e50;">
+                        <i class="user icon"></i> Логин
+                    </label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <div class="ui red pointing above ui label">
+                            {{ form.username.errors|striptags }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Поле пароля -->
+                <div class="field" style="margin-bottom: 1rem;">
+                    <label for="{{ form.password.id_for_label }}" style="font-weight: 600; color: #2c3e50;">
+                        <i class="lock icon"></i> Пароль
+                    </label>
+                    {{ form.password }}
+                    {% if form.password.errors %}
+                        <div class="ui red pointing above ui label">
+                            {{ form.password.errors|striptags }}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="field" style="margin-bottom: 1rem;">
+                    <label for="{{ form.captcha.id_for_label }}" style="font-weight: 600; color: #2c3e50;">
+                        <i class="shield alternate icon"></i> Подтвердите, что вы не робот
+                    </label>
+                    {{ form.captcha }}
+                    {% if form.captcha.errors %}
+                        <div class="ui red pointing above ui label">
+                            {{ form.captcha.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+            
+                <!-- Кнопка входа -->
+                <button type="submit" class="ui teal button fluid" style="border-radius: 25px; padding: 1rem;">
+                    <i class="sign in icon"></i> Войти
+                </button>
+            </form>
+
+        <!-- Поле капчи -->
+
+
+            <!-- Ссылки -->
+            <div class="ui message" style="border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+                <i class="help circle icon"></i>
+                <div class="content">
+                    <div class="header">Нет аккаунта?</div>
+                    <p>Зарегистрируйтесь <a href="#" style="color: #2ecc71; font-weight: 600;">здесь</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

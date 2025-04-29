@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %} {{ season.title }} {% endblock title %}
+{% block title %} {{ season.series.name }} {% endblock title %}
 
 {% block content %}
 <div class="ui container">
@@ -39,12 +39,13 @@
             Сезоны сериала
         </h2>
         
-        <div class="ui divided items">
+        <div class="ui divided items" id="seasons-list">
             {% for s in series.season_series.all %}
-            <div class="item {% if s == season %}active current-season{% endif %}">
+            <div class="item {% if s == season %}active current-season{% endif %}" data-season-id="{{ s.id }}">
                 <div class="content">
                     <a href="{% url 'series_season_user' s.id %}" 
-                       class="ui medium header {% if s == season %}active current-season{% endif %}">
+                       class="ui medium header season-link {% if s == season %}active current-season{% endif %}"
+                       data-season-id="{{ s.id }}">
                         <i class="play circle outline icon"></i>
                         {{ s.title }} {{ s.counter|add:1 }} Сезон
                     </a>
@@ -58,13 +59,13 @@
     </div>
 
     <!-- Эпизоды сезона -->
-    <div class="ui vertical segment">
+    <div class="ui vertical segment" id="episodes-container">
         <h2 class="ui dividing header">
             <i class="video icon"></i>
             Эпизоды сезона
         </h2>
         
-        <div class="ui four stackable cards">
+        <div class="ui four stackable cards" id="episodes-list">
             {% for content in season.content_set.all %}
             <div class="ui card">
                 <div class="image">

@@ -29,7 +29,3 @@ class AddSeriesUser(forms.ModelForm):
             'placeholder':'Студия',
         })
 
-class LoginForm(forms.Form):
-    username = forms.CharField(max_length=75)
-    password = forms.CharField(widget=forms.PasswordInput)
-    captcha = CaptchaField()
