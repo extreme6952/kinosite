@@ -9,8 +9,10 @@ class LoginForm(forms.Form):
 
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput,
+                               label='Придумайте пароль',
                                required=True)
     password2 = forms.CharField(widget=forms.PasswordInput,
+                                label='Введите пароль ещё раз',
                                 required=True)
     captcha = CaptchaField()
     class Meta:
@@ -28,3 +30,4 @@ class UserRegistrationForm(forms.ModelForm):
         if User.objects.filter(email=data).exists():
             raise forms.ValidationError('Данный email уже зарегстрирован')
         return data
+
