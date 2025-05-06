@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'semanticuiforms',
-    'captcha'
+    'django_recaptcha',
 ]
 
 MIDDLEWARE = [
@@ -136,3 +136,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = 'media/'
 LOGIN_REDIRECT_URL = reverse_lazy('list_user_series')
+
+RECAPTCHA_PUBLIC_KEY = '6LfHjzArAAAAAOq3jbNXYKFqarpyQLaw-fcIzqTM'
+RECAPTCHA_PRIVATE_KEY = '6LfHjzArAAAAALEqIKELfypKfLWBV9bkzMV5cpws'

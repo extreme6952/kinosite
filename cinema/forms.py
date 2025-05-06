@@ -1,7 +1,7 @@
 from .models import *
 from django import forms
 from django.forms.models import inlineformset_factory
-from captcha.fields import CaptchaField
+from django_recaptcha.fields import ReCaptchaField
 
 class AddSeasonForm(forms.Form):
     season = forms.ModelChoiceField(queryset=Season.objects.all(),

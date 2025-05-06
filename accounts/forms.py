@@ -1,11 +1,12 @@
 from django import forms
-from captcha.fields import CaptchaField
+from django_recaptcha.fields import ReCaptchaField
+from django_recaptcha.widgets import ReCaptchaV2Checkbox  
 from django.contrib.auth.models import User
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=75)
     password = forms.CharField(widget=forms.PasswordInput)
-    captcha = CaptchaField()
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
 
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput,
@@ -14,7 +15,7 @@ class UserRegistrationForm(forms.ModelForm):
     password2 = forms.CharField(widget=forms.PasswordInput,
                                 label='Введите пароль ещё раз',
                                 required=True)
-    captcha = CaptchaField()
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
     class Meta:
         model = User
         fields = ['username','first_name','last_name','email',]

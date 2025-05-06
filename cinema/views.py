@@ -67,7 +67,6 @@ class SeriesUserListView(UserSeriesMixin,ListView):
     template_name = 'series/series_redaction_user/list_series_user.html'
 
 class AddSeasonSeriesView(TemplateResponseMixin,View):
-    template_name = 'series/series_redaction_user/list_series_user.html'
     series = None
 
     def dispatch(self, request, pk ,*args, **kwargs):
