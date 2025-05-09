@@ -66,8 +66,9 @@ class SeriesAddFormView(TemplateResponseMixin,View):
 class SeriesUserListView(UserSeriesMixin,ListView):
     template_name = 'series/series_redaction_user/list_series_user.html'
 
-class AddSeasonSeriesView(TemplateResponseMixin,View):
+class AddSeasonSeriesView(CreateView):
     series = None
+    template_name = 'series/series_home_page/season_video.html'
 
     def dispatch(self, request, pk ,*args, **kwargs):
         self.series = get_object_or_404(Series,
@@ -81,7 +82,7 @@ class AddSeasonSeriesView(TemplateResponseMixin,View):
     
     def post(self,request,pk):
         season = Season.objects.create(series=self.series)
-        return redirect('series_season_user',season.pk)
+        return redirect('series_season_user',season_id=season.pk)
     
 # Запрос приходит на URL, связанный с этим представлением. Например:
 # /courses/module/1/content/text/2/, где:

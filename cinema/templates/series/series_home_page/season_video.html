@@ -15,11 +15,10 @@
         <div class="ui grid">
             <div class="four wide column">
                 {% if user.is_authenticated and user == series.user %}
-                <a href="{% url 'add_season_user_series' series.pk %}" 
-                   class="ui primary button">
-                    <i class="plus icon"></i>
-                    Новый сезон
-                </a>
+                <form action="{% url 'add_season_user_series' series.pk %}" method="post">
+                    {% csrf_token %}
+                    <button><i class="plus icon"></i>Новый сезон</button>
+                </form>
                 {% endif %}
             </div>
             <div class="twelve wide column">
