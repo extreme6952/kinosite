@@ -5,14 +5,10 @@ from django.urls import reverse_lazy
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,login
 from django.views.generic.base import View,TemplateResponseMixin
-from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from django.views.generic.base import TemplateView
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
-from django.contrib.sites.models import Site
-from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes
 from django.urls import reverse_lazy
 
 #Временное решение в качестве аналога аутентификации юзера - 
@@ -70,12 +66,13 @@ class CustomRegistrationDoneView(TemplateView):
 class CustomRegistrationConfirmView(View):
     def get(self,request,uidb64,token):
         try:
-            # uidb64 in int
-            uid = urlsafe_base64_encode(uidb64)
+            # uid юзера преобразуем в int по его id (раскодируем его id)
+            uid = urlsafe_base64_encode(uidb64).decode()
             user = User.objects.get(pk=uid)
         except(TypeError,ValueError,OverflowError,User.DoesNotExist):
             user = None
-
+        #Проверка,что юзер такой имеется и проверятеся,что токен,который 
+        #для него создавался тоже такой есть
         if user is not None and default_token_generator.check_token(user,token):
             user.is_active = True
             user.save()

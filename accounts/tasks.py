@@ -11,15 +11,16 @@ class SendEmail:
     def __init__(self,user:User,request):
         self.user = user
         self.current_site = get_current_site(request)
+        #Создаём уникальный токен при регистрации для юзера.Eго id получает make_token
         self.token = default_token_generator.make_token(self.user)
-        # будет создан экземпляр юзера по модели, 
-        # извлечётся его id создастся уникальная ссылка по ней юзер подтвердит свою почту
-        #переводит id пользователя в байты.
+        # Будет создан экземпляр юзера по его модели, его id извлечётся и 
+        # будет переведёт в uidb64 
         self.uid = urlsafe_base64_encode(force_bytes(self.user.pk)) 
 
     def send_activate(self):
         #строит URL по имени маршрута account:user_registration, 
-        # подставляя в него параметры uidb64 и token
+        # подставляя в него параметры uidb64 и token, то есть в url адресс его 
+        # уникальный токен и его id, закодированный в uidb64
         reset_password_url = reverse_lazy(
             "account:signup_confirm",
             kwargs={"uidb64":self.uid,
@@ -35,6 +36,7 @@ class SendEmail:
         # который отправляет письмо на email 
         # пользователя с заданной темой и текстом.
         self.user.email_user(subject=subject,message=message)
+
 
 def activate_email_task(user:User):
     send_email = SendEmail(user=user)
