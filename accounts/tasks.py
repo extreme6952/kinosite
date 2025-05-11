@@ -1,16 +1,19 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
+from django.core.mail import EmailMessage
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.urls import reverse_lazy
+from celery import shared_task
 
 
 class SendEmail:
-    def __init__(self,user:User,request):
+    def __init__(self,user:User,domain:str):
         self.user = user
-        self.current_site = get_current_site(request)
+        self.current_site = domain
         #Создаём уникальный токен при регистрации для юзера.Eго id получает make_token
         self.token = default_token_generator.make_token(self.user)
         # Будет создан экземпляр юзера по его модели, его id извлечётся и 
@@ -35,9 +38,17 @@ class SendEmail:
         # встроенный метод модели пользователя, 
         # который отправляет письмо на email 
         # пользователя с заданной темой и текстом.
-        self.user.email_user(subject=subject,message=message)
+        email = EmailMessage(subject,
+                         message,
+                         'kaznacheev6969@gmail.com',
+                         [self.user.email])
+        email.send()
 
-
-def activate_email_task(user:User):
-    send_email = SendEmail(user=user)
+@shared_task
+def activate_email_task(user_id):
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
+    user = User.objects.get(pk=user_id)
+    current_site = Site.objects.get_current().domain
+    send_email = SendEmail(user=user, domain=current_site)
     send_email.send_activate()

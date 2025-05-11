@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-6z0l_u+i5_@oih%b1+ia93#)fm)&0l=@oz0u%$wfjx+#7-!&c9
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+SITE_ID = 1
 
 # Application definition
 
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'semanticuiforms',
@@ -139,3 +140,12 @@ LOGIN_REDIRECT_URL = reverse_lazy('list_user_series')
 
 RECAPTCHA_PUBLIC_KEY = '6LfHjzArAAAAAOq3jbNXYKFqarpyQLaw-fcIzqTM'
 RECAPTCHA_PRIVATE_KEY = '6LfHjzArAAAAALEqIKELfypKfLWBV9bkzMV5cpws'
+
+#Подключениe smtp сервера
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = 'kaznacheev6969@gmail.com'
+# EMAIL_HOST_PASSWORD = 'ndtw clgr lzgg elxe'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode
 from django.urls import reverse_lazy
+from .tasks import activate_email_task
 
 #Временное решение в качестве аналога аутентификации юзера - 
 # - Тестирую добавление капчи 
@@ -55,6 +56,7 @@ class UserRegistrationView(TemplateResponseMixin,View):
             user:User = form.save()
             user.is_active = False
             user.save()
+            activate_email_task.delay(user_id=user.pk)
             return HttpResponseRedirect(reverse_lazy('account:signup_done'))
         else:
             messages.error(request,'Произошла неизвестная ошибка,повторите попытку позже')
