@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('series-users/',include('cinema.urls')),
+    path('',include('cinema.urls')),
     path('accounts/',include('accounts.urls',namespace='account')),
     # path('captcha/',include('captcha.urls')),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
