@@ -8,9 +8,12 @@ from django.views.generic.base import View,TemplateResponseMixin
 from django.views.generic.base import TemplateView
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
-from django.utils.http import urlsafe_base64_encode
+from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
 from django.urls import reverse_lazy
 from .tasks import activate_email_task
+import logging
+
+logger = logging.getLogger(__name__)
 
 #Временное решение в качестве аналога аутентификации юзера - 
 # - Тестирую добавление капчи 
@@ -69,22 +72,27 @@ class CustomRegistrationConfirmView(View):
     def get(self,request,uidb64,token):
         try:
             # uid юзера преобразуем в int по его id (раскодируем его id)
-            uid = urlsafe_base64_encode(uidb64).decode()
+            uid = urlsafe_base64_decode(uidb64).decode()
             user = User.objects.get(pk=uid)
-        except(TypeError,ValueError,OverflowError,User.DoesNotExist):
+            logger.info(f'Пользователь с {uid} найден.')
+        except(TypeError,ValueError,OverflowError,User.DoesNotExist) as e:
             user = None
+            logger.error(f'Ошибка при получении пользователя {e}')
         #Проверка,что юзер такой имеется и проверятеся,что токен,который 
         #для него создавался тоже такой есть
         if user is not None and default_token_generator.check_token(user,token):
             user.is_active = True
             user.save()
             login(request,user)
+            logger.info(f'Пользователь {user.pk} успешно активирован.')
             return render(request,
                           'registration/signup_user_confirm.html',
                           {'title':'Учётная запись успешно активирована'})
         else:
+            logger.warning(f"Неудачная попытка активации пользователя. uid={uidb64}, token={token}")
             return render(
                 request,
                 'registration/signup_user_error.html',
                 {'title':'Произошла ошибка при подтверждении аккаунта'}
             )
+        

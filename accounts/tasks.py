@@ -18,7 +18,7 @@ class SendEmail:
         self.token = default_token_generator.make_token(self.user)
         # Будет создан экземпляр юзера по его модели, его id извлечётся и 
         # будет переведёт в uidb64 
-        self.uid = urlsafe_base64_encode(force_bytes(self.user.pk)) 
+        self.uid = urlsafe_base64_encode(force_bytes(self.user.pk,encoding='utf-8')) 
 
     def send_activate(self):
         #строит URL по имени маршрута account:user_registration, 
