@@ -52,3 +52,8 @@ def activate_email_task(user_id):
     current_site = Site.objects.get_current().domain
     send_email = SendEmail(user=user, domain=current_site)
     send_email.send_activate()
+
+@shared_task
+def delete_false_active_user():
+    User.objects.filter(is_active=False).delete()
+delete_false_active_user.delay()

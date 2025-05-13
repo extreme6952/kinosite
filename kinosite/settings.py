@@ -15,9 +15,13 @@ from pathlib import Path
 from django.conf.global_settings import STATICFILES_DIRS
 from django.urls import reverse_lazy
 
+from celery import Celery
+from celery.schedules import crontab as crontab_celery
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Прописываю celery и делаю настройку 
+app = Celery('kinosite')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -45,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'semanticuiforms',
     'django_recaptcha',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -149,3 +154,13 @@ RECAPTCHA_PRIVATE_KEY = '6LfHjzArAAAAALEqIKELfypKfLWBV9bkzMV5cpws'
 # EMAIL_USE_TLS = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+app.conf.beat_schedule = {
+    'task_name':{
+        'task':'accounts.tasks.delete_false_active_user',
+        'schedule':crontab_celery(minute='*'),
+    }
+}
+app.conf.timezone = 'Europe/Moscow'
+
+CELERY_ENABLE_UTC = False
