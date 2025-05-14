@@ -1,12 +1,15 @@
 from django.db import models
 from unidecode import unidecode
 from django.urls import reverse
+from django.db.models import Avg
 from django.utils.text import slugify
+from django.core.validators import MaxValueValidator,MinValueValidator
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey,GenericRelation
 from .fields import OrderField
 from .models_crete_from_contenttype import *
+
 
 class Series(models.Model):
     user = models.ForeignKey(User,
@@ -19,7 +22,6 @@ class Series(models.Model):
     created = models.DateField(auto_now_add=True)
     updated = models.DateField(auto_now=True)
     studio = models.CharField(max_length=250)
-    
     class Meta:
         ordering = ['-created']
         verbose_name = 'Сериал'
@@ -33,9 +35,13 @@ class Series(models.Model):
     def __str__(self):
         return self.name
     
+    def average_rating(self):
+        return self.series_rating.filter(active=True).aggregate(avg=Avg('stars'))
+
     def get_absolute_url(self):
         return reverse("series_detail", args=[self.id,
                                               self.slug,])
+    
     
 
 class Season(models.Model):
@@ -95,3 +101,32 @@ class Video(ItemBase):
         self.video.close()
         self.video.delete(save=False)
         super(Video,self).delete(*args, **kwargs)
+
+#Система рейтинга сериала
+class Rating(models.Model):
+    series = models.ForeignKey(Series,
+                               on_delete=models.CASCADE,
+                               related_name='series_rating')
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE)
+    stars = models.PositiveIntegerField(validators=[
+         MinValueValidator(1),
+         MaxValueValidator(5),
+    ])
+    text = models.TextField(blank=True)
+    active = models.BooleanField(default=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['-series']
+        indexes = [
+            models.Index(fields=[
+                'series',
+            ])
+        ]
+        unique_together = ['series','user']
+
+    def __str__(self):
+        return f'Рейтинг {self.user} на {self.series.name}'
+    

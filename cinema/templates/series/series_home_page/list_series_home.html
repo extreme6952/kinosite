@@ -23,15 +23,15 @@
             </div>
           </div>
           <div class="extra content">
-            {% comment %} <span class="right floated">
-              <i class="heart outline like icon"></i>
-              10 лайков
-            </span> {% endcomment %}
-            <span>
-              <i class="calendar icon"></i>
-              Дата добавления: {{ object.created|date:"d.m.Y" }}
-            </span>
-          </div>
+  <span class="right floated" style="font-size: 1.2em; color: #fbbd08;">
+    <i class="star icon"></i>
+    {{ object.average_rating.avg|floatformat:1 }}
+  </span>
+  <span>
+    <i class="calendar icon"></i>
+    Дата добавления: {{ object.created|date:"d.m.Y" }}
+  </span>
+</div>
         </div>
       {% endfor %}
     </div>

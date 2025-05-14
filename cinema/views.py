@@ -1,6 +1,7 @@
 from django.views.generic.detail import DetailView
 from .forms import *
 from .models import *
+from django.db import IntegrityError
 from django.apps import apps
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
@@ -171,6 +172,7 @@ class SeriesDetailView(DetailView):
     model = Series
     template_name = 'series/series_home_page/detail_series.html'
     context_object_name = 'series'
+    form_class = RatingSeriesModelFormUser
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -184,6 +186,28 @@ class SeriesDetailView(DetailView):
             for season in seasons
         ]
         return context
+    
+    def get(self,request,*args, **kwargs):
+        pk = kwargs.get('pk')
+        series = get_object_or_404(self.model,id=pk)
+        form = self.form_class()
+        return self.render_to_response({'series':series,
+                                    'form':form})
+    
+    def post(self,request,*args, **kwargs):
+        pk = kwargs.get('pk')
+        series = get_object_or_404(self.model,id=pk)
+        form = self.form_class(data=request.POST)
+        if form.is_valid():
+
+            try:
+                Rating.objects.create(series=series,
+                                      user=self.request.user,
+                                      text = form.cleaned_data['text'],
+                                      stars=form.cleaned_data['stars'],)
+            except IntegrityError:
+                messages.error(request,'Упс больше одного отзыва нельзя(')
+        return self.render_to_response({'series':series,'form':form})
 
 #Предоставление просомтра юзером контента своих сериалов и редактитрования своего сериала
 class SeasonVideoView(TemplateResponseMixin,View):

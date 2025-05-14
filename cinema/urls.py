@@ -16,4 +16,5 @@ urlpatterns = [
          name='content_video_update'),
     path('season-series/<int:season_id>/',views.SeasonVideoView.as_view(),name='series_season_user'),
     path('delete-video/<int:id>/delete/',views.DeleteVideoSeriesView.as_view(),name='delete_video_season_series'),
+    path('raiting-series/<int:series_id>/',views.AddCommentRatingForm.as_view(),name='add_raitng_series')
 ]

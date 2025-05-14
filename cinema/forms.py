@@ -29,3 +29,7 @@ class AddSeriesUser(forms.ModelForm):
             'placeholder':'Студия',
         })
 
+class RatingSeriesModelFormUser(forms.ModelForm):
+    class Meta:
+        model = Rating
+        fields = ['text','stars',]

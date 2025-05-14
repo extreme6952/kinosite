@@ -36,3 +36,9 @@ class CommentModelAdmin(admin.ModelAdmin):
     list_display = ['user','content_type','created']
     list_filter = ['created','updated','content_type']
     search_fields = ['user','text',]
+
+@admin.register(Rating)
+class RatingModelAdmin(admin.ModelAdmin):
+    list_display = ['series','user','active']
+    list_filter = ['user','created','updated',]
+    search_fields = ['user','text']

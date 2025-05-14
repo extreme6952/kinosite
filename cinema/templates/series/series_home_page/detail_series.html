@@ -74,7 +74,7 @@
         <h3 class="ui dividing header" style="color: var(--dark-color);">Комментарии</h3>
 
         <!-- Форма для добавления комментария -->
-        <form class="ui form">
+        {% comment %} <form class="ui form">
             <div class="field">
                 <label style="color: var(--dark-color);">Оставить комментарий:</label>
                 <textarea rows="3"></textarea>
@@ -114,8 +114,15 @@
             </div>
         </div>
     </div>
-</div>
+</div> {% endcomment %}
 
+<div>
+        <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Добавить">
+    </form>
+</div>
 <style>
     /* Дополнительные стили */
     .season-segment {
