@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import *
-from .models_crete_from_contenttype import Comment
+
 
 class SeasonInline(admin.StackedInline):
     model = Season
@@ -30,12 +30,6 @@ class ContentAdmin(admin.ModelAdmin):
     list_display = ['season', 'item', 'created','counter']
     list_filter = ['season', 'content_type']
      # Для удобного выбора связанных объектов
-
-@admin.register(Comment)
-class CommentModelAdmin(admin.ModelAdmin):
-    list_display = ['user','content_type','created']
-    list_filter = ['created','updated','content_type']
-    search_fields = ['user','text',]
 
 @admin.register(Rating)
 class RatingModelAdmin(admin.ModelAdmin):

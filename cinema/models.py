@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey,GenericRelation
 from .fields import OrderField
-from .models_crete_from_contenttype import *
+
 
 
 class Series(models.Model):
@@ -82,7 +82,6 @@ class ItemBase(models.Model):
     title = models.CharField(max_length=250)
     created = models.DateField(auto_now_add=True)
     updated = models.DateField(auto_now=True)
-    comment = GenericRelation('Comment')
     class Meta:
         abstract = True
 
