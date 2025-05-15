@@ -117,12 +117,16 @@
 </div> {% endcomment %}
 
 <div>
-        <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Добавить">
-    </form>
+        {% include "series/series_home_page/includes/form_rating_series.html" %}
 </div>
+
+    {% for comment in comments %}
+    
+        <p>{{comment.user.username}}</p>
+        <p>{{comment.text}}</p>
+        <p>{{comment.stars}}</p>
+    {% endfor %}
+
 <style>
     /* Дополнительные стили */
     .season-segment {

@@ -177,6 +177,9 @@ class SeriesDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         seasons = self.object.season_series.all()
+        series = self.object
+        context['form'] = self.form_class
+        context['comments'] = series.series_rating.filter(active=True)
         context['seasons'] = [
             {
                 'season': season,
@@ -186,13 +189,7 @@ class SeriesDetailView(DetailView):
             for season in seasons
         ]
         return context
-    
-    def get(self,request,*args, **kwargs):
-        pk = kwargs.get('pk')
-        series = get_object_or_404(self.model,id=pk)
-        form = self.form_class()
-        return self.render_to_response({'series':series,
-                                    'form':form})
+
     
     def post(self,request,*args, **kwargs):
         pk = kwargs.get('pk')
@@ -205,6 +202,7 @@ class SeriesDetailView(DetailView):
                                       user=self.request.user,
                                       text = form.cleaned_data['text'],
                                       stars=form.cleaned_data['stars'],)
+                return redirect(series.get_absolute_url())
             except IntegrityError:
                 messages.error(request,'Упс больше одного отзыва нельзя(')
         return self.render_to_response({'series':series,'form':form})
