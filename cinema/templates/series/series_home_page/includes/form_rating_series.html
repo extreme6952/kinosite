@@ -1,7 +1,53 @@
 {% block content %}
-    <form method="post">
+<style>
+    .no-js-rating {
+    display: inline-flex;
+    flex-direction: row-reverse; /* чтобы звезды шли справа налево */
+    justify-content: flex-start;
+}
+
+.no-js-rating input[type="radio"] {
+    display: none; /* скрываем радио-кнопки */
+}
+
+.no-js-rating label {
+    font-size: 2rem;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 0 0.1rem;
+}
+
+.no-js-rating input[type="radio"]:checked ~ label,
+.no-js-rating label:hover,
+.no-js-rating label:hover ~ label {
+    color: #f2b01e; /* золотой цвет звёзд */
+}
+
+</style>
+    <form method="post" class="ui form" style="margin-top: 2rem;">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Добавить">
+        <div class="field">
+            {{ form.text.label_tag }}
+            {{ form.text }}
+            {% for error in form.text.errors %}
+                <div class="ui pointing red basic label">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="field">
+            <label>Оценка:</label>
+            <div class="ui star rating no-js-rating">
+                {% for i in "54321" %}
+                    <input type="radio" id="star{{ i }}" name="stars" value="{{ i }}" {% if form.stars.value|stringformat:"s" == i %}checked{% endif %}>
+                    <label for="star{{ i }}" title="{{ i }} звезда">&#9733;</label>
+                {% endfor %}
+            </div>
+            {% for error in form.stars.errors %}
+                <div class="ui pointing red basic label">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <button class="ui primary button" type="submit">Отправить</button>
     </form>
 {% endblock content %}

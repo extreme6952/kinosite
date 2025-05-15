@@ -116,16 +116,52 @@
     </div>
 </div> {% endcomment %}
 
-<div>
-        {% include "series/series_home_page/includes/form_rating_series.html" %}
+<div class="ui segment" style="margin-top: 2rem;">
+    <h3 class="ui dividing header" style="color: var(--dark-color);">Оставить комментарий</h3>
+    {% include "series/series_home_page/includes/form_rating_series.html" %}
 </div>
 
-    {% for comment in comments %}
-    
-        <p>{{comment.user.username}}</p>
-        <p>{{comment.text}}</p>
-        <p>{{comment.stars}}</p>
-    {% endfor %}
+
+    <div class="ui comments" style="margin-top: 2rem;">
+    <h3 class="ui dividing header">Отзывы пользователей</h3>
+
+   {% if comments %}
+    <div class="ui comments" style="margin-top: 2rem;">
+        <h3 class="ui dividing header">Отзывы пользователей</h3>
+
+        {% for comment in comments %}
+            <div class="comment">
+                <a class="avatar">
+                    <!-- Здесь можно добавить аватар пользователя, если есть -->
+                </a>
+                <div class="content">
+                    <a class="author">{{ comment.user.username }}</a>
+                    <div class="metadata" style="display: flex; align-items: center; gap: 1rem;">
+                        <span class="stars">
+                            {% for i in "12345" %}
+                                {% if i|add:"0" <= comment.stars %}
+                                    <span style="color: #f2b01e; font-size: 1.2rem;">&#9733;</span>
+                                {% else %}
+                                    <span style="color: #ccc; font-size: 1.2rem;">&#9733;</span>
+                                {% endif %}
+                            {% endfor %}
+                        </span>
+                        <span class="date" style="color: #777; font-size: 0.9rem;">
+                            {{ comment.created_at|date:"d M Y, H:i" }}
+                        </span>
+                    </div>
+                    <div class="text" style="margin-top: 0.5em;">
+                        {{ comment.text|linebreaksbr }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>Пока нет комментариев. Будьте первым!</p>
+{% endif %}
+
+</div>
 
 <style>
     /* Дополнительные стили */

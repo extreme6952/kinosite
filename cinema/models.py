@@ -43,7 +43,6 @@ class Series(models.Model):
                                               self.slug,])
     
     
-
 class Season(models.Model):
     series = models.ForeignKey(Series,
                                on_delete=models.CASCADE,
@@ -59,7 +58,6 @@ class Season(models.Model):
     def __str__(self):
         return f"Сезон сериала {self.series.name} "
     
-
 class Content(models.Model):
     season = models.ForeignKey(Season,
                                on_delete=models.CASCADE)
@@ -77,7 +75,6 @@ class Content(models.Model):
     class Meta:
         ordering = ['created']
 
-
 class ItemBase(models.Model):
     user = models.ForeignKey(User,
                              on_delete=models.CASCADE,
@@ -92,7 +89,6 @@ class ItemBase(models.Model):
     def __str__(self):
         return self.title
     
-
 class Video(ItemBase):
     video = models.FileField(upload_to='video/')
     #Переопределяю метод delete,что бы удалялись media с 
@@ -125,7 +121,6 @@ class Rating(models.Model):
                 'series',
             ])
         ]
-        unique_together = ['series','user']
 
     def __str__(self):
         return f'Рейтинг {self.user} на {self.series.name}'

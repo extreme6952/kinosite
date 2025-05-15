@@ -190,13 +190,11 @@ class SeriesDetailView(DetailView):
         ]
         return context
 
-    
     def post(self,request,*args, **kwargs):
         pk = kwargs.get('pk')
         series = get_object_or_404(self.model,id=pk)
         form = self.form_class(data=request.POST)
         if form.is_valid():
-
             try:
                 Rating.objects.create(series=series,
                                       user=self.request.user,
@@ -217,7 +215,6 @@ class SeasonVideoView(TemplateResponseMixin,View):
                                    series__user=request.user)
         return self.render_to_response({'season':season})
     
-
 #Удаление видео с сайта. аккаунт модератора
 class DeleteVideoSeriesView(View):
     def post(self,request,id):
